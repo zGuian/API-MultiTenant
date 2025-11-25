@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/1. WebApi/">
+    <Project Path="src/GearCore.Monolith.WebApi/GearCore.Monolith.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/src/2. Core/">
+    <Project Path="src/GearCore.Monolith.Core/GearCore.Monolith.Core.csproj" />
+  </Folder>
+  <Folder Name="/src/3. Infra/" />
+  <Folder Name="/src/3. Infra/3.1 Infra.Data/">
+    <Project Path="src/GearCore.Monolith.Infra.Data/GearCore.Monolith.Infra.Data.csproj" />
+  </Folder>
+  <Folder Name="/src/3. Infra/3.2 Infra.CrossCutting/">
+    <Project Path="src/GearCore.Monolith.Infra.CC/GearCore.Monolith.Infra.CC.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>
