@@ -1,20 +1,11 @@
 ﻿using GearCore.Monolith.Core.ProductCore.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http.Json;
-using System.Text;
 
 namespace GearCore.Monolith.Tests.Integration
 {
-    public class ProductTests : IClassFixture<WebApiApplication>
+    public class ProductTests(WebApiApplication factory) : IClassFixture<WebApiApplication>
     {
-        private readonly HttpClient _client;
-
-        public ProductTests(WebApiApplication factory)
-        {
-            _client = factory.CreateClient();
-        }
+        private readonly HttpClient _client = factory.CreateClient();
 
         [Fact]
         public async Task GetById_ShouldReturn_ProductViewDto()
