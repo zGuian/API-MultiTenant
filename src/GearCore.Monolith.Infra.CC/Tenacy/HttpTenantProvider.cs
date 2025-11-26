@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace GearCore.Monolith.Infra.CC.Tenacy
 {

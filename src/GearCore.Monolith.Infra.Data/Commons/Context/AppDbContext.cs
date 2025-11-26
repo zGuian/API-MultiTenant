@@ -1,7 +1,7 @@
 ﻿using GearCore.Monolith.Core.Commons.Entities;
 using GearCore.Monolith.Core.ProductCore.Entities;
 using GearCore.Monolith.Core.StockCore.Entities;
-using GearCore.Monolith.Infra.CC.Tenacy;
+using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;

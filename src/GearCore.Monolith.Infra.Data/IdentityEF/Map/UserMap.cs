@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GearCore.Monolith.Infra.Data.IdentityEF.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GearCore.Monolith.Infra.Data.IdentityEF.Map

@@ -6,6 +6,7 @@ using GearCore.Monolith.Core.StockCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.StockCore.Interfaces.Services;
 using GearCore.Monolith.Core.StockCore.Services;
 using GearCore.Monolith.Infra.CC.Tenacy;
+using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
 using GearCore.Monolith.Infra.Data.ProductInfra.Repositories;
