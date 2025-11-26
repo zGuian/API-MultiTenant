@@ -21,4 +21,8 @@
     <ProjectReference Include="..\GearCore.Monolith.Infra.Data\GearCore.Monolith.Infra.Data.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="GearCore.Monolith.Tests" />
+	</ItemGroup>
+
 </Project>
