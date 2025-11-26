@@ -1,6 +1,8 @@
-﻿namespace GearCore.Monolith.Infra.CC.Tenacy
+﻿using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
+
+namespace GearCore.Monolith.Infra.CC.Tenacy.Helpers
 {
-    public class TenantSqlBuilder(ITenantProvider tenantProvider)
+    public class TenantSqlHelper(ITenantProvider tenantProvider)
     {
         private readonly ITenantProvider _tenantProvider = tenantProvider;
 

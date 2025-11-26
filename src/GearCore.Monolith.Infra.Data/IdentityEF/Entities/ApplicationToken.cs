@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace GearCore.Monolith.Infra.Data.IdentityEF
+namespace GearCore.Monolith.Infra.Data.IdentityEF.Entities
 {
     public class ApplicationToken : IdentityUserToken<Guid>
     {

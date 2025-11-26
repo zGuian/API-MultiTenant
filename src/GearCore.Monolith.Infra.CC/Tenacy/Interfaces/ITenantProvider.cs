@@ -1,4 +1,4 @@
-﻿namespace GearCore.Monolith.Infra.CC.Tenacy
+﻿namespace GearCore.Monolith.Infra.CC.Tenacy.Interfaces
 {
     public interface ITenantProvider
     {

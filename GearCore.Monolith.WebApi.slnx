@@ -13,5 +13,7 @@
   <Folder Name="/src/3. Infra/3.2 Infra.CrossCutting/">
     <Project Path="src/GearCore.Monolith.Infra.CC/GearCore.Monolith.Infra.CC.csproj" />
   </Folder>
-  <Folder Name="/tests/" />
+  <Folder Name="/tests/">
+    <Project Path="tests/GearCore.Monolith.Tests/GearCore.Monolith.Tests.csproj" Id="13a2f9e0-e97a-44e6-8e92-16fc1f8bfdd8" />
+  </Folder>
 </Solution>
