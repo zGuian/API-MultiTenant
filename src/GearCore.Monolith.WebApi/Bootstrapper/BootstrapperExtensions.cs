@@ -15,6 +15,7 @@ using GearCore.Monolith.Infra.Data.IdentityEF.Entities;
 using GearCore.Monolith.Infra.Data.ProductInfra.Repositories;
 using GearCore.Monolith.Infra.Data.StockInfra.Repositories;
 using Mapster;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace GearCore.Monolith.WebApi.Bootstrapper
@@ -68,20 +69,10 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
 
         private static void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentity<ApplicationUser, ApplicationRole>(opts =>
+            services.AddDbContext<AppDbContext>((sp, opts) =>
             {
-                opts.Password.RequireDigit = true;
-                opts.Password.RequireLowercase = true;
-                opts.Password.RequireUppercase = true;
-                opts.Password.RequireNonAlphanumeric = false;
+                var httpTenant = sp.GetService<ITenantProvider>();
 
-                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                opts.User.RequireUniqueEmail = true;
-            });
-
-
-            services.AddDbContext<AppDbContext>(opts =>
-            {
                 opts.UseSqlServer(configuration.GetConnectionString("SQLDefault"), config =>
                 {
                     config.EnableRetryOnFailure(
@@ -92,6 +83,19 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
                     config.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
                 });
             });
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>(opts =>
+            {
+                opts.Password.RequireDigit = true;
+                opts.Password.RequireLowercase = true;
+                opts.Password.RequireUppercase = true;
+                opts.Password.RequireNonAlphanumeric = false;
+
+                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                opts.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
         }
 
         private static void AddServicesCrossCutting(this IServiceCollection services)

@@ -27,8 +27,6 @@ namespace GearCore.Monolith.Infra.Data.IdentityEF.Map
             builder.Property(r => r.ConcurrencyStamp)
                 .HasColumnName("COL_CONCURRENCY_STAMP")
                 .HasMaxLength(255);
-
-            throw new NotImplementedException();
         }
     }
 }
