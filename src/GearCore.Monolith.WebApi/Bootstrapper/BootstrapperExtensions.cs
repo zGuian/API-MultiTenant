@@ -7,8 +7,11 @@ using GearCore.Monolith.Core.StockCore.Interfaces.Services;
 using GearCore.Monolith.Core.StockCore.Services;
 using GearCore.Monolith.Infra.CC.Tenacy;
 using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
+using GearCore.Monolith.Infra.CC.TokenJwt;
+using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
+using GearCore.Monolith.Infra.Data.IdentityEF.Entities;
 using GearCore.Monolith.Infra.Data.ProductInfra.Repositories;
 using GearCore.Monolith.Infra.Data.StockInfra.Repositories;
 using Mapster;
@@ -49,8 +52,7 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
         {
             ConfigureDatabase(services, configuration);
             AddRepositories(services);
-
-            services.AddScoped<ITenantProvider, HttpTenantProvider>();
+            AddServicesCrossCutting(services);
         }
 
         private static void AddRepositories(IServiceCollection services)
@@ -66,6 +68,18 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
 
         private static void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddIdentity<ApplicationUser, ApplicationRole>(opts =>
+            {
+                opts.Password.RequireDigit = true;
+                opts.Password.RequireLowercase = true;
+                opts.Password.RequireUppercase = true;
+                opts.Password.RequireNonAlphanumeric = false;
+
+                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                opts.User.RequireUniqueEmail = true;
+            });
+
+
             services.AddDbContext<AppDbContext>(opts =>
             {
                 opts.UseSqlServer(configuration.GetConnectionString("SQLDefault"), config =>
@@ -78,6 +92,12 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
                     config.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
                 });
             });
+        }
+
+        private static void AddServicesCrossCutting(this IServiceCollection services)
+        {
+            services.AddScoped<ITenantProvider, HttpTenantProvider>();
+            services.AddScoped<IJwtServices, JwtServices>();
         }
         #endregion Infrastructure
     }

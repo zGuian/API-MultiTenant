@@ -26,7 +26,8 @@ namespace GearCore.Monolith.WebApi.Controllers
             {
                 throw new UnauthorizedAccessException("Senhas incorreta");
             }
-            var token = _jwtServices.GenerateToken(user, await _userManager.GetRolesAsync(user));
+            var roles = await _userManager.GetRolesAsync(user);
+            var token = _jwtServices.GenerateToken(user, roles);
             return Ok(new
             {
                 Token = token
