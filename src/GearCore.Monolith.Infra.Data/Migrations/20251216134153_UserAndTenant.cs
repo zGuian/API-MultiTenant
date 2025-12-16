@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GearCore.Monolith.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentity : Migration
+    public partial class UserAndTenant : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    COL_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    COL_ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     COL_NAME = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     COL_NORMALIZED_NAME = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     COL_CONCURRENCY_STAMP = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
@@ -29,8 +29,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    COL_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    COL_TENANT_ID = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    COL_ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     COL_USERNAME = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     COL_NORMALIZED_USERNAME = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     COL_EMAIL = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -52,22 +51,17 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_PRODUCT",
+                name: "TB_TENANT",
                 columns: table => new
                 {
-                    COL_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    COL_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    COL_DESCRIPTION = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    COL_PRICE = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    COL_IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false),
-                    COL_BRAND = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    COL_CREATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    COL_UPDATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TenantId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    COL_ID = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    COL_NAME = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    COL_SUBDOMAIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    COL_IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_PRODUCT", x => x.COL_ID);
+                    table.PrimaryKey("PK_TB_TENANT", x => x.COL_ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,7 +70,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -97,7 +91,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -119,7 +113,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,8 +130,8 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,7 +154,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    COL_USER_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    COL_USER_ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     COL_LOGIN_PROVIDER = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     COL_NAME = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     COL_VALUE = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -177,46 +171,28 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_STOCK",
+                name: "TB_TENANT_USER",
                 columns: table => new
                 {
-                    COL_FK_PRODUCTID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    COL_CURRENT_QUANTITY = table.Column<int>(type: "int", nullable: false),
-                    TenantId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    COL_TENANT_ID = table.Column<string>(type: "nvarchar(36)", nullable: false),
+                    COL_USER_ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    COL_ROLE = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    COL_IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false),
+                    COL_CREATED_BY = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_STOCK", x => x.COL_FK_PRODUCTID);
+                    table.PrimaryKey("PK_TB_TENANT_USER", x => new { x.COL_TENANT_ID, x.COL_USER_ID });
                     table.ForeignKey(
-                        name: "FK_TB_STOCK_TB_PRODUCT_COL_FK_PRODUCTID",
-                        column: x => x.COL_FK_PRODUCTID,
-                        principalTable: "TB_PRODUCT",
+                        name: "FK_TB_TENANT_USER_AspNetUsers_COL_USER_ID",
+                        column: x => x.COL_USER_ID,
+                        principalTable: "AspNetUsers",
                         principalColumn: "COL_ID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TB_STOCK_MOVIMENTS",
-                columns: table => new
-                {
-                    COL_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    COL_FK_PRODUCTID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    COL_QUANTITY = table.Column<int>(type: "int", nullable: false),
-                    COL_PREVIOUS_QUANTITY = table.Column<int>(type: "int", nullable: false),
-                    COL_NEW_QUANTITY = table.Column<int>(type: "int", nullable: false),
-                    COL_MOVEMENT_DATE = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    COL_MOVEMENT_TYPE = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    COL_ORIGIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    COL_OBSERVATION = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TenantId = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TB_STOCK_MOVIMENTS", x => x.COL_ID);
                     table.ForeignKey(
-                        name: "FK_TB_STOCK_MOVIMENTS_TB_PRODUCT_COL_FK_PRODUCTID",
-                        column: x => x.COL_FK_PRODUCTID,
-                        principalTable: "TB_PRODUCT",
+                        name: "FK_TB_TENANT_USER_TB_TENANT_COL_TENANT_ID",
+                        column: x => x.COL_TENANT_ID,
+                        principalTable: "TB_TENANT",
                         principalColumn: "COL_ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -225,7 +201,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 name: "TB_USER_TOKEN",
                 columns: table => new
                 {
-                    COL_USER_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    COL_USER_ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     COL_LOGIN_PROVIDER = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     COL_NAME = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
@@ -273,20 +249,6 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 column: "COL_NORMALIZED_EMAIL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_COL_EMAIL_COL_TENANT_ID",
-                table: "AspNetUsers",
-                columns: new[] { "COL_EMAIL", "COL_TENANT_ID" },
-                unique: true,
-                filter: "[COL_EMAIL] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_COL_USERNAME_COL_TENANT_ID",
-                table: "AspNetUsers",
-                columns: new[] { "COL_USERNAME", "COL_TENANT_ID" },
-                unique: true,
-                filter: "[COL_USERNAME] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "COL_NORMALIZED_USERNAME",
@@ -294,9 +256,9 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 filter: "[COL_NORMALIZED_USERNAME] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_STOCK_MOVIMENTS_COL_FK_PRODUCTID",
-                table: "TB_STOCK_MOVIMENTS",
-                column: "COL_FK_PRODUCTID");
+                name: "IX_TB_TENANT_USER_COL_USER_ID",
+                table: "TB_TENANT_USER",
+                column: "COL_USER_ID");
         }
 
         /// <inheritdoc />
@@ -315,10 +277,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 name: "AspNetUserRoles");
 
             migrationBuilder.DropTable(
-                name: "TB_STOCK");
-
-            migrationBuilder.DropTable(
-                name: "TB_STOCK_MOVIMENTS");
+                name: "TB_TENANT_USER");
 
             migrationBuilder.DropTable(
                 name: "TB_USER_TOKEN");
@@ -327,7 +286,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "TB_PRODUCT");
+                name: "TB_TENANT");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");

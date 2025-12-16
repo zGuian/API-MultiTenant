@@ -19,7 +19,7 @@ namespace GearCore.Monolith.Tests.Integration
             var product = await response.Content.ReadFromJsonAsync<ProductViewDto>();
 
             Assert.NotNull(product);
-            Assert.Equal(Guid.Parse(id), product!.Id);
+            Assert.Equal(id, product!.Id);
             Assert.Equal("Produto Teste", product.Name);
             Assert.Equal("Descrição teste", product.Description);
             Assert.Equal(50, product.Price);

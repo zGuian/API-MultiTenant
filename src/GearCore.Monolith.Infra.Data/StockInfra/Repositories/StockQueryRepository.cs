@@ -11,6 +11,6 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Repositories
         : BaseQueryRepository<Stock, Guid>(context), IStockQueryRepository
     {
         private readonly ILogger<StockQueryRepository> _logger = logger;
-        private new readonly AppDbContext _context = context;
+        private readonly AppDbContext _context = context;
     }
 }

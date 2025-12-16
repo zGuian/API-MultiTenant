@@ -10,9 +10,6 @@ namespace GearCore.Monolith.Core.ProductCore.Entities
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
         public string Brand { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdateAt { get; set; } = DateTimeOffset.Now.LocalDateTime;
-
         public virtual ICollection<StockMoviments> Moviments { get; set; } = [];
         public virtual Stock Stock { get; set; } = null!;
     }

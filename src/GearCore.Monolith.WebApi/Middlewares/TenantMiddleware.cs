@@ -11,8 +11,7 @@
             if (context.Request.Headers.TryGetValue("X-Tenant-ID", out var headerTenantId))
                 tenantId = headerTenantId.ToString();
 
-            if (tenantId == null)
-                tenantId = context.User.FindFirst("tenant")?.Value;
+            tenantId ??= context.User.FindFirst("tenant")?.Value;
 
             if (tenantId == null)
             {

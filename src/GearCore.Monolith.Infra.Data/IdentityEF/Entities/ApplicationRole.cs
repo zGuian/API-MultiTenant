@@ -2,7 +2,7 @@
 
 namespace GearCore.Monolith.Infra.Data.IdentityEF.Entities
 {
-    public class ApplicationRole : IdentityRole<Guid>
+    public class ApplicationRole : IdentityRole<string>
     {
     }
 }

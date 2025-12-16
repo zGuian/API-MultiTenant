@@ -17,7 +17,7 @@ namespace GearCore.Monolith.Core.ProductCore.Services
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                CreatedAt = product.CreatedAt
+                CreatedBy = product.CreatedBy
             };
         }
     }

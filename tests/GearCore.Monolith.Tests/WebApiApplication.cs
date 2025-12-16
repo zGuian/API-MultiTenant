@@ -35,14 +35,14 @@ namespace GearCore.Monolith.Tests
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
 
-                db.Products.Add(new Product
-                {
-                    Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    Name = "Produto Teste",
-                    Description = "Descrição teste",
-                    Price = 50,
-                    CreatedAt = DateTime.UtcNow
-                });
+                //db.Products.Add(new Product
+                //{
+                //    Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                //    Name = "Produto Teste",
+                //    Description = "Descrição teste",
+                //    Price = 50,
+                //    CreatedAt = DateTime.UtcNow
+                //});
 
                 db.SaveChanges();
             });

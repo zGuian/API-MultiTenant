@@ -1,4 +1,4 @@
-﻿namespace GearCore.Monolith.Core.Commons.Entities
+﻿namespace GearCore.Monolith.Core.TenantCore.Entities
 {
     public class Tenant
     {

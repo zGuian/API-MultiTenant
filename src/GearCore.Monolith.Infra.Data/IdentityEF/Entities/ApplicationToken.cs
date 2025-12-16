@@ -2,7 +2,7 @@
 
 namespace GearCore.Monolith.Infra.Data.IdentityEF.Entities
 {
-    public class ApplicationToken : IdentityUserToken<Guid>
+    public class ApplicationToken : IdentityUserToken<string>
     {
     }
 }

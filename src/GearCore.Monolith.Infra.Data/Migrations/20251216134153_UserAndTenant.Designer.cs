@@ -12,163 +12,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GearCore.Monolith.Infra.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251127032028_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20251216134153_UserAndTenant")]
+    partial class UserAndTenant
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.0")
+                .HasAnnotation("ProductVersion", "10.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GearCore.Monolith.Core.ProductCore.Entities.Product", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("COL_ID")
-                        .HasColumnOrder(0);
-
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("COL_BRAND")
-                        .HasColumnOrder(5);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("COL_CREATED_AT")
-                        .HasColumnOrder(6);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasColumnName("COL_DESCRIPTION")
-                        .HasColumnOrder(2);
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit")
-                        .HasColumnName("COL_IS_ACTIVE")
-                        .HasColumnOrder(4);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("COL_NAME")
-                        .HasColumnOrder(1);
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("COL_PRICE")
-                        .HasColumnOrder(3);
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("COL_UPDATED_AT")
-                        .HasColumnOrder(7);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TB_PRODUCT", (string)null);
-                });
-
-            modelBuilder.Entity("GearCore.Monolith.Core.StockCore.Entities.Stock", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("COL_FK_PRODUCTID")
-                        .HasColumnOrder(0);
-
-                    b.Property<int>("CurrentQuantity")
-                        .HasColumnType("int")
-                        .HasColumnName("COL_CURRENT_QUANTITY")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ProductId");
-
-                    b.ToTable("TB_STOCK", (string)null);
-                });
-
-            modelBuilder.Entity("GearCore.Monolith.Core.StockCore.Entities.StockMoviments", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("COL_ID")
-                        .HasColumnOrder(0);
-
-                    b.Property<DateTime>("MovementDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("COL_MOVEMENT_DATE")
-                        .HasColumnOrder(5);
-
-                    b.Property<string>("MovementType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("COL_MOVEMENT_TYPE")
-                        .HasColumnOrder(6);
-
-                    b.Property<int>("NewQuantity")
-                        .HasColumnType("int")
-                        .HasColumnName("COL_NEW_QUANTITY")
-                        .HasColumnOrder(4);
-
-                    b.Property<string>("Observation")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("COL_OBSERVATION")
-                        .HasColumnOrder(8);
-
-                    b.Property<string>("Origin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("COL_ORIGIN")
-                        .HasColumnOrder(7);
-
-                    b.Property<int>("PreviousQuantity")
-                        .HasColumnType("int")
-                        .HasColumnName("COL_PREVIOUS_QUANTITY")
-                        .HasColumnOrder(3);
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("COL_FK_PRODUCTID")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasColumnName("COL_QUANTITY")
-                        .HasColumnOrder(2);
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("TB_STOCK_MOVIMENTS", (string)null);
-                });
-
             modelBuilder.Entity("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationRole", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("COL_ID")
                         .HasColumnOrder(0);
 
@@ -202,9 +62,8 @@ namespace GearCore.Monolith.Infra.Data.Migrations
 
             modelBuilder.Entity("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationUser", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("COL_ID")
                         .HasColumnOrder(0);
 
@@ -267,13 +126,6 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("COL_SECURITY_STAMP");
 
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("COL_TENANT_ID")
-                        .HasColumnOrder(1);
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit")
                         .HasColumnName("COL_TWO_FACTOR_ENABLED");
@@ -294,18 +146,70 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[COL_NORMALIZED_USERNAME] IS NOT NULL");
 
-                    b.HasIndex("Email", "TenantId")
-                        .IsUnique()
-                        .HasFilter("[COL_EMAIL] IS NOT NULL");
-
-                    b.HasIndex("UserName", "TenantId")
-                        .IsUnique()
-                        .HasFilter("[COL_USERNAME] IS NOT NULL");
-
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("GearCore.Monolith.Infra.Data.TenantInfra.Model.TenantModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnName("COL_ID")
+                        .HasColumnOrder(0);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasColumnName("COL_IS_ACTIVE")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("COL_NAME")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Subdomain")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("COL_SUBDOMAIN")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_TENANT", (string)null);
+                });
+
+            modelBuilder.Entity("GearCore.Monolith.Infra.Data.TenantInfra.Model.TenantUserModel", b =>
+                {
+                    b.Property<string>("TenantId")
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnName("COL_TENANT_ID");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("COL_USER_ID");
+
+                    b.Property<DateTime>("CreatedBy")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("COL_CREATED_BY");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("COL_IS_ACTIVE");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("COL_ROLE");
+
+                    b.HasKey("TenantId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TB_TENANT_USER", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,8 +223,9 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -329,7 +234,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -343,8 +248,9 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -353,7 +259,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -364,8 +270,9 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -374,13 +281,13 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -389,10 +296,10 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("COL_USER_ID")
                         .HasColumnOrder(0);
 
@@ -422,34 +329,31 @@ namespace GearCore.Monolith.Infra.Data.Migrations
 
             modelBuilder.Entity("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationToken", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>");
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserToken<string>");
 
                     b.ToTable("TB_USER_TOKEN", (string)null);
                 });
 
-            modelBuilder.Entity("GearCore.Monolith.Core.StockCore.Entities.Stock", b =>
+            modelBuilder.Entity("GearCore.Monolith.Infra.Data.TenantInfra.Model.TenantUserModel", b =>
                 {
-                    b.HasOne("GearCore.Monolith.Core.ProductCore.Entities.Product", "Product")
-                        .WithOne("Stock")
-                        .HasForeignKey("GearCore.Monolith.Core.StockCore.Entities.Stock", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("GearCore.Monolith.Core.StockCore.Entities.StockMoviments", b =>
-                {
-                    b.HasOne("GearCore.Monolith.Core.ProductCore.Entities.Product", "Product")
-                        .WithMany("Moviments")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("GearCore.Monolith.Infra.Data.TenantInfra.Model.TenantModel", "Tenant")
+                        .WithMany("TenantUsers")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.HasOne("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationUser", "User")
+                        .WithMany("TenantUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationRole", null)
                         .WithMany()
@@ -458,7 +362,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationUser", null)
                         .WithMany()
@@ -467,7 +371,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationUser", null)
                         .WithMany()
@@ -476,7 +380,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationRole", null)
                         .WithMany()
@@ -491,7 +395,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationUser", null)
                         .WithMany()
@@ -502,19 +406,21 @@ namespace GearCore.Monolith.Infra.Data.Migrations
 
             modelBuilder.Entity("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationToken", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", null)
                         .WithOne()
                         .HasForeignKey("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationToken", "UserId", "LoginProvider", "Name")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GearCore.Monolith.Core.ProductCore.Entities.Product", b =>
+            modelBuilder.Entity("GearCore.Monolith.Infra.Data.IdentityEF.Entities.ApplicationUser", b =>
                 {
-                    b.Navigation("Moviments");
+                    b.Navigation("TenantUsers");
+                });
 
-                    b.Navigation("Stock")
-                        .IsRequired();
+            modelBuilder.Entity("GearCore.Monolith.Infra.Data.TenantInfra.Model.TenantModel", b =>
+                {
+                    b.Navigation("TenantUsers");
                 });
 #pragma warning restore 612, 618
         }

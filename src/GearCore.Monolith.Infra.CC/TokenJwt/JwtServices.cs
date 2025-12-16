@@ -20,6 +20,7 @@ namespace GearCore.Monolith.Infra.CC.TokenJwt
                 ?? throw new InvalidOperationException("JWT Key is not configured."));
             var claims = new List<Claim>
             {
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()!),
                 new(ClaimTypes.Name, user.UserName!),
                 new(ClaimTypes.Email, user.Email!)
             };

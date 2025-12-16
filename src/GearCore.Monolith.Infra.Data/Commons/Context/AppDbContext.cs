@@ -1,8 +1,8 @@
 ﻿using GearCore.Monolith.Core.Commons.Entities;
-using GearCore.Monolith.Core.ProductCore.Entities;
-using GearCore.Monolith.Core.StockCore.Entities;
+using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
 using GearCore.Monolith.Infra.Data.IdentityEF.Entities;
+using GearCore.Monolith.Infra.Data.TenantInfra.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -11,12 +11,12 @@ namespace GearCore.Monolith.Infra.Data.Commons.Context
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options
         , ITenantProvider tenantProvider = null!)
-        : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>(options)
+        : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
     {
         private readonly ITenantProvider? _tenantProvider = tenantProvider;
 
-        public DbSet<Stock> Stocks { get; set; } = null!;
-        public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<TenantModel> Tenants { get; set; } = null!;
+        public DbSet<TenantUserModel> TenantUsers { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

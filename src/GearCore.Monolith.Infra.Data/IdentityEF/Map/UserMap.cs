@@ -14,18 +14,6 @@ namespace GearCore.Monolith.Infra.Data.IdentityEF.Map
                 .HasColumnName("COL_ID")
                 .HasColumnOrder(0);
 
-            builder.Property(u => u.TenantId)
-                .HasColumnName("COL_TENANT_ID")
-                .HasMaxLength(50)
-                .HasColumnOrder(1)
-                .IsRequired();
-
-            builder.HasIndex(u => new { u.Email, u.TenantId })
-                .IsUnique();
-
-            builder.HasIndex(u => new { u.UserName, u.TenantId })
-                .IsUnique();
-
             builder.Property(u => u.UserName)
                 .HasColumnName("COL_USERNAME")
                 .HasColumnOrder(2)

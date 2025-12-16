@@ -5,6 +5,9 @@ using GearCore.Monolith.Core.ProductCore.Services;
 using GearCore.Monolith.Core.StockCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.StockCore.Interfaces.Services;
 using GearCore.Monolith.Core.StockCore.Services;
+using GearCore.Monolith.Core.TenantCore.Interfaces.Repositories;
+using GearCore.Monolith.Core.TenantCore.Interfaces.Services;
+using GearCore.Monolith.Core.TenantCore.Services;
 using GearCore.Monolith.Infra.CC.Tenacy;
 using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
 using GearCore.Monolith.Infra.CC.TokenJwt;
@@ -14,6 +17,7 @@ using GearCore.Monolith.Infra.Data.Commons.Repositories;
 using GearCore.Monolith.Infra.Data.IdentityEF.Entities;
 using GearCore.Monolith.Infra.Data.ProductInfra.Repositories;
 using GearCore.Monolith.Infra.Data.StockInfra.Repositories;
+using GearCore.Monolith.Infra.Data.TenantInfra.Repositories;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +49,9 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
 
             services.AddScoped<IProductCommand, ProductCommand>();
             services.AddScoped<IProductQuery, ProductQuery>();
+
+            services.AddScoped<ITenantCommand, TenantCommand>();
+            services.AddScoped<ITenantQuery, TenantQuery>();
         }
         #endregion Core
 
@@ -63,6 +70,9 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
 
             services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
             services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
+
+            services.AddScoped<ITenantCommandRepository, TenantCommandRepository>();
+            services.AddScoped<ITenantQueryRepository, TenantQueryRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }

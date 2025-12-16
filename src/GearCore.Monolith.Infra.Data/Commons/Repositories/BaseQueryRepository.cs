@@ -6,10 +6,9 @@ using Microsoft.EntityFrameworkCore;
 namespace GearCore.Monolith.Infra.Data.Commons.Repositories
 {
     public abstract class BaseQueryRepository<TEntity, TKey>(AppDbContext context)
-        : IBaseQueryRepository<TEntity, TKey>
-        where TEntity : class
+        : IBaseQueryRepository<TEntity, TKey> where TEntity : class
     {
-        protected readonly DbSet<TEntity> _context = context.Set<TEntity>();
+        private readonly DbSet<TEntity> _context = context.Set<TEntity>();
 
         public virtual async Task<HashSet<TEntity>> GetAllAsync(CancellationToken ct = default)
         {
