@@ -1,10 +1,8 @@
-﻿using GearCore.Monolith.Core.ProductCore.Entities;
-using GearCore.Monolith.Infra.Data.Commons.Context;
+﻿using GearCore.Monolith.Infra.Data.Commons.Context;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace GearCore.Monolith.Tests
 {

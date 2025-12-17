@@ -3,7 +3,8 @@ using GearCore.Monolith.Core.TenantCore.DTOs;
 using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Services;
-using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
+using GearCore.Monolith.Core.UserCore.Entities;
+using GearCore.Monolith.Core.UserCore.Interfaces.Entities;
 using Mapster;
 
 namespace GearCore.Monolith.Core.TenantCore.Services
@@ -22,9 +23,7 @@ namespace GearCore.Monolith.Core.TenantCore.Services
             await _commandRepository.RegisterAsync(entity);
         }
 
-        public async Task LinkToUserAsync(IApplicationUser user, string tenantID)
-        {
-            await _commandRepository.LinkToUserAsync(user, tenantID);
-        }
+        public async Task LinkToUserAsync(User user, string tenantID) 
+            => await _commandRepository.LinkToUserAsync(user, tenantID);
     }
 }

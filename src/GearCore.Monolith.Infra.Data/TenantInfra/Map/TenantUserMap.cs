@@ -1,12 +1,12 @@
-﻿using GearCore.Monolith.Infra.Data.TenantInfra.Model;
+﻿using GearCore.Monolith.Core.TenantCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GearCore.Monolith.Infra.Data.TenantInfra.Map
 {
-    public class TenantUserMap : IEntityTypeConfiguration<TenantUserModel>
+    public class TenantUserMap : IEntityTypeConfiguration<TenantUser>
     {
-        public void Configure(EntityTypeBuilder<TenantUserModel> builder)
+        public void Configure(EntityTypeBuilder<TenantUser> builder)
         {
             builder.ToTable("TB_TENANT_USER");
 
@@ -35,14 +35,12 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Map
                 .IsRequired();
 
             // Relacionamento
-            builder
-                .HasOne(tu => tu.Tenant)
+            builder.HasOne(tu => tu.Tenant)
                 .WithMany(t => t.TenantUsers)
                 .HasForeignKey(tu => tu.TenantId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .HasOne(tu => tu.User)
+            builder.HasOne(tu => tu.User)
                 .WithMany(u => u.TenantUsers)
                 .HasForeignKey(tu => tu.UserId)
                 .OnDelete(DeleteBehavior.Cascade);

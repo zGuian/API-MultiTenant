@@ -1,12 +1,12 @@
-﻿using GearCore.Monolith.Core.TenantCore.Entities;
-using GearCore.Monolith.Core.UserCore.Interfaces.Entities;
-using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
+﻿using GearCore.Monolith.Core.Commons.Interfaces;
+using GearCore.Monolith.Core.TenantCore.Entities;
+using GearCore.Monolith.Core.UserCore.Entities;
 
 namespace GearCore.Monolith.Core.TenantCore.Interfaces.Repositories
 {
-    public interface ITenantCommandRepository
+    public interface ITenantCommandRepository : IBaseCommandRepository<Tenant, string>
     {
-        Task LinkToUserAsync(IApplicationUser user, string tenantID);
+        Task LinkToUserAsync(User user, string tenantID);
         Task RegisterAsync(Tenant entity);
     }
 }

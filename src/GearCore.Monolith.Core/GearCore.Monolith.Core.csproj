@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Mapster" Version="7.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GearCore.Monolith.Infra.CC\GearCore.Monolith.Infra.CC.csproj" />
+    <Folder Include="TenantCore\Interfaces\Entities\" />
   </ItemGroup>
 
 </Project>

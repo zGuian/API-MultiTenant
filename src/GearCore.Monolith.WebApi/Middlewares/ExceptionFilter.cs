@@ -20,8 +20,6 @@ namespace GearCore.Monolith.WebApi.Middlewares
             context.Result = new ObjectResult(new
             {
                 gearCoreExceptions.Message,
-                gearCoreExceptions.InnerException,
-                gearCoreExceptions.StackTrace
             });
         }
 
@@ -31,8 +29,6 @@ namespace GearCore.Monolith.WebApi.Middlewares
             context.Result = new ObjectResult(new
             {
                 context.Exception.Message,
-                context.Exception.InnerException,
-                context.Exception.StackTrace
             });
         }
     }

@@ -1,17 +1,18 @@
-﻿using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
+﻿using GearCore.Monolith.Core.UserCore.Entities;
+using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace GearCore.Monolith.Infra.CC.TokenJwt
+namespace GearCore.Monolith.Infra.Data.Commons.TokenJwt
 {
     public class JwtServices(IConfiguration configuration) : IJwtServices
     {
         private readonly IConfiguration _configuration = configuration;
 
-        public string GenerateToken(IApplicationUser user, IList<string> roles)
+        public string GenerateToken(User user, IList<string> roles)
         {
             ValidateUser(user);
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -20,9 +21,9 @@ namespace GearCore.Monolith.Infra.CC.TokenJwt
                 ?? throw new InvalidOperationException("JWT Key is not configured."));
             var claims = new List<Claim>
             {
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()!),
-                new(ClaimTypes.Name, user.UserName!),
-                new(ClaimTypes.Email, user.Email!)
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Name, user.CompleteName),
+                new(ClaimTypes.Email, user.Email)
             };
             claims.AddRange(roles.Select(c => new Claim(ClaimTypes.Role, c)));
 
@@ -40,15 +41,15 @@ namespace GearCore.Monolith.Infra.CC.TokenJwt
             return tokenHandler.WriteToken(token);
         }
 
-        private static void ValidateUser(IApplicationUser user)
+        private static void ValidateUser(User user)
         {
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user), "User cannot be null.");
             }
-            if (string.IsNullOrEmpty(user.UserName))
+            if (string.IsNullOrEmpty(user.CompleteName))
             {
-                throw new ArgumentException("UserName cannot be null or empty.", nameof(user.UserName));
+                throw new ArgumentException("UserName cannot be null or empty.", nameof(user.CompleteName));
             }
             if (string.IsNullOrEmpty(user.Email))
             {

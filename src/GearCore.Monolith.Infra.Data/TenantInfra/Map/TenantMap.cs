@@ -1,12 +1,12 @@
-﻿using GearCore.Monolith.Infra.Data.TenantInfra.Model;
+﻿using GearCore.Monolith.Core.TenantCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GearCore.Monolith.Infra.Data.TenantInfra.Map
 {
-    public class TenantMap : IEntityTypeConfiguration<TenantModel>
+    public class TenantMap : IEntityTypeConfiguration<Tenant>
     {
-        public void Configure(EntityTypeBuilder<TenantModel> builder)
+        public void Configure(EntityTypeBuilder<Tenant> builder)
         {
             builder.ToTable("TB_TENANT");
 
@@ -28,7 +28,7 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Map
                 .HasColumnName("COL_SUBDOMAIN")
                 .IsRequired(false);
 
-            builder.Property(t => t.Active)
+            builder.Property(t => t.IsActive)
                 .HasColumnOrder(3)
                 .HasColumnName("COL_IS_ACTIVE")
                 .IsRequired();

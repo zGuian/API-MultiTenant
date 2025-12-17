@@ -1,11 +1,11 @@
 ﻿using Dapper;
 using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Repositories;
+using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Entities;
 using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
-using GearCore.Monolith.Infra.Data.IdentityEF.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,32 +22,15 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Repositories
         private readonly ILogger<TenantCommandRepository> _logger = logger;
         private readonly AppDbContext _context = context;
         private readonly string _connectionString = configuration.GetConnectionString("SQLDefault")
-            ?? throw new ArgumentNullException("ConnectionString:SQLServer");
+            ?? throw new ArgumentNullException("ConnectionString:SQLDefault");
 
-        public async Task LinkToUserAsync(IApplicationUser user, string tenantID)
+        public async Task LinkToUserAsync(User user, string tenantID)
         {
-            try
-            {
-                string sql = @$"INSERT INTO (userID, tenantID) VALUES (@USER_ID, @TENANT_ID)";
-                var parameters = new
-                {
-                    USER_ID = user.Id,
-                    TENANT_ID = tenantID,
-                };
+            var tenant = await _context.Tenants.FirstOrDefaultAsync(t => t.Id == tenantID)
+                ?? throw new NotImplementedException();
 
-                await using var conn = new SqlConnection(_connectionString);
-                var bt = await conn.BeginTransactionAsync();
-                var line = await conn.ExecuteAsync(sql, parameters, commandTimeout: 30, commandType: CommandType.Text);
-                if (line < 1)
-                {
-                    throw new DbUpdateException("Ocorreu um problema no banco de dados. ");
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            var tenantUser = new TenantUser(user, tenant);
+            await _context.TenantUsers.AddAsync(tenantUser);
         }
 
         public async Task RegisterAsync(Tenant entity)
@@ -62,7 +45,7 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Repositories
                     ID = Guid.NewGuid().ToString(),
                     NAME = entity.Name,
                     SUBDOMAIN = entity.Subdomain,
-                    ISACTIVE = entity.Active
+                    ISACTIVE = entity.IsActive
                 };
 
                 await using var conn = new SqlConnection(_connectionString);

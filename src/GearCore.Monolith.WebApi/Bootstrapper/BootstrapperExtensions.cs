@@ -1,4 +1,5 @@
 ﻿using GearCore.Monolith.Core.Commons.Interfaces;
+using GearCore.Monolith.Core.Commons.Utils.Converters;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Services;
 using GearCore.Monolith.Core.ProductCore.Services;
@@ -8,16 +9,19 @@ using GearCore.Monolith.Core.StockCore.Services;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Services;
 using GearCore.Monolith.Core.TenantCore.Services;
+using GearCore.Monolith.Core.UserCore.Interfaces.Repositories;
+using GearCore.Monolith.Core.UserCore.Interfaces.Services;
+using GearCore.Monolith.Core.UserCore.Services;
 using GearCore.Monolith.Infra.CC.Tenacy;
 using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
-using GearCore.Monolith.Infra.CC.TokenJwt;
 using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
-using GearCore.Monolith.Infra.Data.IdentityEF.Entities;
+using GearCore.Monolith.Infra.Data.Commons.TokenJwt;
 using GearCore.Monolith.Infra.Data.ProductInfra.Repositories;
 using GearCore.Monolith.Infra.Data.StockInfra.Repositories;
 using GearCore.Monolith.Infra.Data.TenantInfra.Repositories;
+using GearCore.Monolith.Infra.Data.UserInfra.Repositories;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,18 +44,28 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
         private static void AddCoreDependencies(this IServiceCollection services)
         {
             AddServices(services);
+            AddMapsterDependecies(services);
         }
 
         private static void AddServices(IServiceCollection services)
         {
+            services.AddScoped<IUserCommand, UserCommand>();
+            services.AddScoped<IUserQuery, UserQuery>();
+
+            services.AddScoped<ITenantCommand, TenantCommand>();
+            services.AddScoped<ITenantQuery, TenantQuery>();
+
             services.AddScoped<IStockCommand, StockCommand>();
             services.AddScoped<IStockQuery, StockQuery>();
 
             services.AddScoped<IProductCommand, ProductCommand>();
             services.AddScoped<IProductQuery, ProductQuery>();
+        }
 
-            services.AddScoped<ITenantCommand, TenantCommand>();
-            services.AddScoped<ITenantQuery, TenantQuery>();
+        private static void AddMapsterDependecies(this IServiceCollection services)
+        {
+            services.AddMapster();
+            MapsterConfig.Configure();
         }
         #endregion Core
 
@@ -65,14 +79,17 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
 
         private static void AddRepositories(IServiceCollection services)
         {
+            services.AddScoped<IUserCommandRepository, UserCommandRepository>();
+            services.AddScoped<IUserQueryRepository, UserQueryRepository>();
+
+            services.AddScoped<ITenantCommandRepository, TenantCommandRepository>();
+            services.AddScoped<ITenantQueryRepository, TenantQueryRepository>();
+
             services.AddScoped<IStockCommandRepository, StockCommandRepository>();
             services.AddScoped<IStockQueryRepository, StockQueryRepository>();
 
             services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
             services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
-
-            services.AddScoped<ITenantCommandRepository, TenantCommandRepository>();
-            services.AddScoped<ITenantQueryRepository, TenantQueryRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
@@ -93,19 +110,6 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
                     config.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
                 });
             });
-
-            services.AddIdentity<ApplicationUser, ApplicationRole>(opts =>
-            {
-                opts.Password.RequireDigit = true;
-                opts.Password.RequireLowercase = true;
-                opts.Password.RequireUppercase = true;
-                opts.Password.RequireNonAlphanumeric = false;
-
-                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                opts.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
         }
 
         private static void AddServicesCrossCutting(this IServiceCollection services)
