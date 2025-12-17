@@ -12,12 +12,7 @@ namespace GearCore.Monolith.Core.TenantCore.Services
         public async Task<HashSet<TenantDto?>> GetAllAsync(CancellationToken ct = default)
         {
             var models = await _queryRepository.GetAllToHashSet(ct);
-            if (models is not null)
-            {
-                var dto = models.Adapt<HashSet<TenantDto?>>();
-                return dto;
-            }
-            throw new NotImplementedException();
+            return models.Adapt<HashSet<TenantDto?>>();
         }
 
         public async Task<TenantDto> GetByIdAsync(string id, CancellationToken ct = default)
