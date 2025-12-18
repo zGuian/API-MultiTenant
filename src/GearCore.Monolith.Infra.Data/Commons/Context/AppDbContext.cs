@@ -1,4 +1,5 @@
-﻿using GearCore.Monolith.Core.TenantCore.Entities;
+﻿using GearCore.Monolith.Core.ProductCore.Entities;
+using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace GearCore.Monolith.Infra.Data.Commons.Context
         public DbSet<UserRoles> UserRoles { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantUser> TenantUsers { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

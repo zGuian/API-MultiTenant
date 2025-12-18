@@ -3,7 +3,7 @@ using GearCore.Monolith.Core.ProductCore.Entities;
 
 namespace GearCore.Monolith.Core.ProductCore.Interfaces.Repositories
 {
-    public interface IProductCommandRepository : IBaseCommandRepository<Product, Guid>
+    public interface IProductCommandRepository : IBaseCommandRepository<Product, string>
     {
     }
 }

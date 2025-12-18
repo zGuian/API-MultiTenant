@@ -1,16 +1,18 @@
 ﻿using GearCore.Monolith.Core.ProductCore.DTOs;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Services;
+using GearCore.Monolith.WebApi.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearCore.Monolith.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/v1/Products")]
+    [RequireTenant]
+    [Route("api/v1/[controller]")]
     public class ProductController : ControllerBase
     {
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById([FromServices] IProductQuery productQuery
-            , [FromRoute] Guid id
+            , [FromRoute] string id
             , CancellationToken ct = default)
         {
             var result = await productQuery.GetByIdAsync(id, ct);
@@ -35,9 +37,9 @@ namespace GearCore.Monolith.WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromServices] IProductCommand productCommand
-            , [FromRoute] Guid id
+            , [FromRoute] string id
             , CancellationToken cancellationToken)
         {
             await productCommand.DeleteAsync(id, cancellationToken);

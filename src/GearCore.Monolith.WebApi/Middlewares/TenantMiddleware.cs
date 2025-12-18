@@ -1,4 +1,6 @@
-﻿namespace GearCore.Monolith.WebApi.Middlewares
+﻿using GearCore.Monolith.WebApi.Attributes;
+
+namespace GearCore.Monolith.WebApi.Middlewares
 {
     public class TenantMiddleware(RequestDelegate next)
     {
@@ -6,6 +8,14 @@
 
         public async Task InvokeAsync(HttpContext context)
         {
+            var endpoint = context.GetEndpoint();
+
+            if (endpoint?.Metadata.GetMetadata<RequireTenantAttribute>() == null)
+            {
+                await _next(context);
+                return;
+            }
+
             string? tenantId = null;
 
             if (context.Request.Headers.TryGetValue("X-Tenant-ID", out var headerTenantId))
@@ -20,7 +30,7 @@
                 return;
             }
 
-            context.Items["TenantId"] = tenantId;
+            context.Items["TenantID"] = tenantId;
             await _next(context);
         }
     }

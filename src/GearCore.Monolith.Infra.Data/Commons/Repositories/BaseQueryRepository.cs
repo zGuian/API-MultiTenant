@@ -11,17 +11,9 @@ namespace GearCore.Monolith.Infra.Data.Commons.Repositories
         private readonly DbSet<TEntity> _context = context.Set<TEntity>();
 
         public virtual async Task<HashSet<TEntity>> GetAllAsync(CancellationToken ct = default)
-        {
-            var entities = await _context.ToHashSetAsync(ct)
-                ?? throw new NotFoundException("No entities found");
-            return entities;
-        }
+            => await _context.ToHashSetAsync(ct) ?? throw new NotFoundException("No entities found");
 
         public virtual async Task<TEntity> GetByIdAsync(TKey id, CancellationToken ct = default)
-        {
-            var entity = await _context.FirstOrDefaultAsync(e => e.Equals(id), ct)
-                ?? throw new NotFoundException("Entity not found");
-            return entity;
-        }
+            => await _context.FindAsync([id], cancellationToken: ct) ?? throw new NotFoundException("Entity not found");
     }
 }

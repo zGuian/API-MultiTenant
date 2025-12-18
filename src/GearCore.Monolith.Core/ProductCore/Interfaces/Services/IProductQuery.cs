@@ -4,6 +4,6 @@ namespace GearCore.Monolith.Core.ProductCore.Interfaces.Services
 {
     public interface IProductQuery
     {
-        Task<ProductViewDto> GetByIdAsync(Guid id, CancellationToken ct);
+        Task<ProductViewDto> GetByIdAsync(string id, CancellationToken ct);
     }
 }

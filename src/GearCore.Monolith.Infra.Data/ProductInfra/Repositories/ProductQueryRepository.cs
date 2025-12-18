@@ -6,7 +6,7 @@ using GearCore.Monolith.Infra.Data.Commons.Repositories;
 namespace GearCore.Monolith.Infra.Data.ProductInfra.Repositories
 {
     public class ProductQueryRepository(AppDbContext context)
-        : BaseQueryRepository<Product, Guid>(context)
+        : BaseQueryRepository<Product, string>(context)
         , IProductQueryRepository
     {
 
