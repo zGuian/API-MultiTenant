@@ -4,7 +4,6 @@ using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Services;
 using GearCore.Monolith.Core.UserCore.Entities;
-using GearCore.Monolith.Core.UserCore.Interfaces.Entities;
 using Mapster;
 
 namespace GearCore.Monolith.Core.TenantCore.Services
@@ -17,13 +16,22 @@ namespace GearCore.Monolith.Core.TenantCore.Services
         private readonly ITenantQueryRepository _queryRepository = tenantQueryRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task RegisterAsync(TenantRegisterDto dto)
+        public async Task RegisterAsync(TenantRegisterDto dto, CancellationToken ct = default)
         {
             var entity = dto.Adapt<Tenant>();
-            await _commandRepository.RegisterAsync(entity);
+            await _commandRepository.RegisterAsync(entity, ct);
         }
 
-        public async Task LinkToUserAsync(User user, string tenantID) 
-            => await _commandRepository.LinkToUserAsync(user, tenantID);
+        public async Task LinkToUserAsync(User user, string tenantID, CancellationToken ct = default)
+        {
+            await _commandRepository.LinkToUserAsync(user, tenantID, ct);
+            await _unitOfWork.CommitAsync(ct);
+        }
+
+        public async Task LinkToUserAsync(string userID, CancellationToken ct = default)
+        {
+            await _commandRepository.LinkToUserAsync(userID, ct);
+            await _unitOfWork.CommitAsync(ct);
+        }
     }
 }

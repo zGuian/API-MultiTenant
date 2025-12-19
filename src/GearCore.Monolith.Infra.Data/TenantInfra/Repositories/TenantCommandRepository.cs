@@ -1,9 +1,9 @@
 ﻿using Dapper;
+using GearCore.Monolith.Core.Exceptions;
 using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.UserCore.Entities;
-using GearCore.Monolith.Core.UserCore.Interfaces.Entities;
-using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
+using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
 using Microsoft.Data.SqlClient;
@@ -16,6 +16,7 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Repositories
 {
     public class TenantCommandRepository(AppDbContext context
         , ILogger<TenantCommandRepository> logger
+        , ITenantProvider tenantProvider
         , IConfiguration configuration)
         : BaseCommandRepository<Tenant, string>(context), ITenantCommandRepository
     {
@@ -23,17 +24,49 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Repositories
         private readonly AppDbContext _context = context;
         private readonly string _connectionString = configuration.GetConnectionString("SQLDefault")
             ?? throw new ArgumentNullException("ConnectionString:SQLDefault");
+        private readonly ITenantProvider _tenantProvider = tenantProvider;
 
-        public async Task LinkToUserAsync(User user, string tenantID)
+        public async Task LinkToUserAsync(User user, string tenantID, CancellationToken ct = default)
         {
-            var tenant = await _context.Tenants.FirstOrDefaultAsync(t => t.Id == tenantID)
+            //HÁ UM PROCESO DE "round-trip" QUE PODE CAUSAR LENTIDÃO EM GRANDE ESCALA.
+            var tenant = await _context.Tenants.FirstOrDefaultAsync(t => t.Id == tenantID, ct)
                 ?? throw new NotImplementedException();
 
             var tenantUser = new TenantUser(user, tenant);
-            await _context.TenantUsers.AddAsync(tenantUser);
+            await _context.TenantUsers.AddAsync(tenantUser, ct);
         }
 
-        public async Task RegisterAsync(Tenant entity)
+        public async Task LinkToUserAsync(string userID, CancellationToken ct = default)
+        {
+            //HÁ UM PROCESO DE "round-trip" QUE PODE CAUSAR LENTIDÃO EM GRANDE ESCALA.
+            try
+            {
+                var tupleResult = await _context.Users.Where(u => u.Id == userID)
+                                          .Select(u => new
+                                          {
+                                              User = u,
+                                              Tenant = _context.Tenants.FirstOrDefault(t => t.Id == _tenantProvider.TenantId)
+                                          })
+                                          .FirstOrDefaultAsync(ct);
+
+                var user = tupleResult?.User;
+                var tenant = tupleResult?.Tenant;
+
+                if (user != null && tenant != null)
+                {
+                    var tenantUser = new TenantUser(user, tenant);
+                    await _context.TenantUsers.AddAsync(tenantUser, ct);
+                    return;
+                }
+                throw new NotFoundException("Ocorreu um problema. Não foi encontrado paramentros no banco de dados");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task RegisterAsync(Tenant entity, CancellationToken ct = default)
         {
             _logger.LogInformation("INICIANDO ACESSO COM BANCO DE DADOS.");
             try
@@ -58,9 +91,9 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Repositories
                 _logger.LogInformation("REGISTRO REALIZADO COM SUCESSO. FECHANDO CONEXÃO COM BANCO DE DADOS!");
                 return;
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                throw ex;
+                throw;
             }
         }
     }

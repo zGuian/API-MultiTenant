@@ -2,6 +2,7 @@
 using GearCore.Monolith.Core.TenantCore.Interfaces.Services;
 using GearCore.Monolith.WebApi.Attributes;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace GearCore.Monolith.WebApi.Controllers
 {
@@ -19,7 +20,7 @@ namespace GearCore.Monolith.WebApi.Controllers
         public async Task<IActionResult> GetByIdAsync([FromServices] ITenantQuery query, [FromRoute] string id, CancellationToken ct)
         {
             var dto = await query.GetByIdAsync(id, ct);
-            return Ok(dto); 
+            return Ok(dto);
         }
 
         [HttpPost("Register")]
@@ -27,6 +28,15 @@ namespace GearCore.Monolith.WebApi.Controllers
         {
             await command.RegisterAsync(dto);
             return Ok("Registrado com sucesso");
+        }
+
+        [RequireTenant]
+        [HttpPost("LinkUser/{userID}")]
+        public async Task<IActionResult> LinkUser([FromServices] ITenantCommand command, [FromRoute] string userID,
+            CancellationToken ct)
+        {
+            await command.LinkToUserAsync(userID, ct);
+            return Ok();
         }
     }
 }

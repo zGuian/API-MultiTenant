@@ -6,7 +6,8 @@ namespace GearCore.Monolith.Core.TenantCore.Interfaces.Repositories
 {
     public interface ITenantCommandRepository : IBaseCommandRepository<Tenant, string>
     {
-        Task LinkToUserAsync(User user, string tenantID);
-        Task RegisterAsync(Tenant entity);
+        Task LinkToUserAsync(User user, string tenantID, CancellationToken ct = default);
+        Task LinkToUserAsync(string userID, CancellationToken ct = default);
+        Task RegisterAsync(Tenant entity, CancellationToken ct = default);
     }
 }

@@ -20,6 +20,7 @@ namespace GearCore.Monolith.Infra.Data.ProductInfra.Repositories
 
         public override async Task InsertAsync(Product entity, CancellationToken ct = default)
         {
+            //HÁ UM PROCESO DE "round-trip" QUE PODE CAUSAR LENTIDÃO EM GRANDE ESCALA.
             entity.Tenant = await _context.Tenants.FindAsync([entity], ct) 
                 ?? throw new NotFoundException("NÃO FOI ENCONTRADO TENANT INFORMADO!");
             await base.InsertAsync(entity, ct);
