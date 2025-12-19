@@ -1,6 +1,7 @@
 ﻿using GearCore.Monolith.Core.ProductCore.DTOs;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Services;
+using Mapster;
 
 namespace GearCore.Monolith.Core.ProductCore.Services
 {
@@ -8,17 +9,18 @@ namespace GearCore.Monolith.Core.ProductCore.Services
     {
         private readonly IProductQueryRepository _productQuery = productQuery;
 
-        public async Task<ProductViewDto> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<int> CountAsync(CancellationToken ct = default) => await _productQuery.CountAsync(ct);
+
+        public async Task<IEnumerable<ProductViewDto>> GetAllAsync(int pageIndex, int pageSize, CancellationToken ct = default)
+        {
+            var products = await _productQuery.GetPagedAsync(pageIndex, pageSize, ct);
+            return products.Adapt<IEnumerable<ProductViewDto>>();
+        }
+
+        public async Task<ProductViewDto> GetByIdAsync(string id, CancellationToken ct)
         {
             var product = await _productQuery.GetByIdAsync(id, ct);
-            return new ProductViewDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                CreatedBy = product.CreatedBy
-            };
+            return product.Adapt<ProductViewDto>();
         }
     }
 }

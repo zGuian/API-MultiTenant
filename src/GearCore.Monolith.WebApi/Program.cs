@@ -1,4 +1,5 @@
 using GearCore.Monolith.WebApi.Bootstrapper;
+using GearCore.Monolith.WebApi.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +9,16 @@ builder.Services.AddControllers().AddJsonOptions(config =>
     config.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
 });
 
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 builder.Services.AddDependencyInjection(builder.Configuration);
 builder.Services.AddOpenApi();
-
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 var app = builder.Build();
+
+app.UseHttpsRedirection();
+app.UseRouting();
 
 if (app.Environment.IsDevelopment())
 {
@@ -26,6 +31,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseMiddleware<TenantMiddleware>();
 app.MapControllers();
 app.Run();
 

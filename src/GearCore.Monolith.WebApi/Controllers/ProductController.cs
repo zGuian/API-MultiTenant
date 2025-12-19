@@ -1,16 +1,37 @@
 ﻿using GearCore.Monolith.Core.ProductCore.DTOs;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Services;
+using GearCore.Monolith.WebApi.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearCore.Monolith.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/v1/Products")]
+    [RequireTenant]
+    [Route("api/v1/[controller]")]
     public class ProductController : ControllerBase
     {
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromServices] IProductQuery query,
+            CancellationToken ct, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 15)
+        {
+
+            var result = await query.GetAllAsync(pageIndex, pageSize, ct);
+            var totalItems = await query.CountAsync(ct);
+            return Ok(new
+            {
+                pagination = new
+                {
+                    currentPage = pageIndex,
+                    pageSize = pageSize,
+                    totalItems
+                },
+                items = result
+            });
+        }
+
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById([FromServices] IProductQuery productQuery
-            , [FromRoute] Guid id
+            , [FromRoute] string id
             , CancellationToken ct = default)
         {
             var result = await productQuery.GetByIdAsync(id, ct);
@@ -18,7 +39,7 @@ namespace GearCore.Monolith.WebApi.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterAsync([FromServices] IProductCommand productCommand
+        public async Task<IActionResult> Register([FromServices] IProductCommand productCommand
             , [FromBody] ProductRegisterDto dto
             , CancellationToken cancellationToken)
         {
@@ -27,7 +48,7 @@ namespace GearCore.Monolith.WebApi.Controllers
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> UpdateAsync([FromServices] IProductCommand productCommand
+        public async Task<IActionResult> Update([FromServices] IProductCommand productCommand
             , [FromBody] ProductUpdateDto dto
             , CancellationToken cancellationToken)
         {
@@ -35,9 +56,9 @@ namespace GearCore.Monolith.WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteAsync([FromServices] IProductCommand productCommand
-            , [FromRoute] Guid id
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromServices] IProductCommand productCommand
+            , [FromRoute] string id
             , CancellationToken cancellationToken)
         {
             await productCommand.DeleteAsync(id, cancellationToken);

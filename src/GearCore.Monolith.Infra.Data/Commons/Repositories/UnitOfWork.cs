@@ -7,7 +7,17 @@ namespace GearCore.Monolith.Infra.Data.Commons.Repositories
     {
         private readonly AppDbContext _context = context;
 
-        public async Task CommitAsync(CancellationToken ct = default) => await _context.SaveChangesAsync(ct);
+        public async Task CommitAsync(CancellationToken ct = default)
+        {
+            try
+            {
+                await _context.SaveChangesAsync(ct);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
 
         public void Commit() => _context.SaveChanges();
     }

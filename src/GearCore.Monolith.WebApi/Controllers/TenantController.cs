@@ -1,5 +1,6 @@
 ﻿using GearCore.Monolith.Core.TenantCore.DTOs;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Services;
+using GearCore.Monolith.WebApi.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearCore.Monolith.WebApi.Controllers

@@ -3,6 +3,7 @@ using GearCore.Monolith.Core.UserCore.DTOs;
 using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Services;
 using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
+using GearCore.Monolith.WebApi.Attributes;
 using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace GearCore.Monolith.WebApi.Controllers
 {
     [ApiController]
+    [RequireTenant]
     [Route("api/v1/[controller]")]
     public class UserController(IUserCommand command
         , IUserQuery query
