@@ -9,6 +9,14 @@ namespace GearCore.Monolith.Core.ProductCore.Services
     {
         private readonly IProductQueryRepository _productQuery = productQuery;
 
+        public async Task<int> CountAsync(CancellationToken ct = default) => await _productQuery.CountAsync(ct);
+
+        public async Task<IEnumerable<ProductViewDto>> GetAllAsync(int pageIndex, int pageSize, CancellationToken ct = default)
+        {
+            var products = await _productQuery.GetPagedAsync(pageIndex, pageSize, ct);
+            return products.Adapt<IEnumerable<ProductViewDto>>();
+        }
+
         public async Task<ProductViewDto> GetByIdAsync(string id, CancellationToken ct)
         {
             var product = await _productQuery.GetByIdAsync(id, ct);

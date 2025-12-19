@@ -20,7 +20,7 @@ namespace GearCore.Monolith.Infra.Data.ProductInfra.Repositories
 
         public override async Task InsertAsync(Product entity, CancellationToken ct = default)
         {
-            entity.Tenant = await _context.Tenants.FindAsync(_tenantProvider.TenantId) 
+            entity.Tenant = await _context.Tenants.FindAsync([entity], ct) 
                 ?? throw new NotFoundException("NÃO FOI ENCONTRADO TENANT INFORMADO!");
             await base.InsertAsync(entity, ct);
         }
