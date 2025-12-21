@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="SalesCore\DTOs\" />
     <Folder Include="TenantCore\Interfaces\Entities\" />
   </ItemGroup>
 
