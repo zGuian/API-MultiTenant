@@ -1,4 +1,6 @@
 ﻿using GearCore.Monolith.Core.ProductCore.Entities;
+using GearCore.Monolith.Core.SalesCore.Entities;
+using GearCore.Monolith.Core.StockCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
@@ -17,6 +19,10 @@ namespace GearCore.Monolith.Infra.Data.Commons.Context
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantUser> TenantUsers { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<SaleItem> SaleItems { get; set; } 
+        public DbSet<Sales> Sales { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
+        public DbSet<StockMoviments> StockMoviments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,7 +48,7 @@ namespace GearCore.Monolith.Infra.Data.Commons.Context
         //{
         //    if (_tenantProvider == null) return;
 
-        //    var tenantId = _tenantProvider.TenantId;
+        //    var tenantId = _tenantProvider.TenantID;
 
         //    var entries = ChangeTracker
         //        .Entries()
@@ -50,9 +56,9 @@ namespace GearCore.Monolith.Infra.Data.Commons.Context
 
         //    foreach (var entry in entries)
         //    {
-        //        if (entry.Entity.GetType().GetProperty("TenantId") != null)
+        //        if (entry.Entity.GetType().GetProperty("TenantID") != null)
         //        {
-        //            entry.CurrentValues["TenantId"] = tenantId;
+        //            entry.CurrentValues["TenantID"] = tenantId;
         //        }
         //    }
         //}
@@ -61,11 +67,11 @@ namespace GearCore.Monolith.Infra.Data.Commons.Context
         //{
         //    if (_tenantProvider == null) return;
 
-        //    var tenantId = _tenantProvider.TenantId;
+        //    var tenantId = _tenantProvider.TenantID;
 
         //    foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         //    {
-        //        if (entityType.ClrType.GetProperty(nameof(BaseEntity.TenantId)) != null)
+        //        if (entityType.ClrType.GetProperty(nameof(BaseEntity.TenantID)) != null)
         //        {
         //            var method = typeof(AppDbContext)
         //                .GetMethod(nameof(SetGlobalQueryFilter), BindingFlags.NonPublic | BindingFlags.Static)
@@ -80,7 +86,7 @@ namespace GearCore.Monolith.Infra.Data.Commons.Context
         //    where TEntity : class
         //{
         //    builder.Entity<TEntity>()
-        //        .HasQueryFilter(e => EF.Property<string>(e, "TenantId") == tenantId);
+        //        .HasQueryFilter(e => EF.Property<string>(e, "TenantID") == tenantId);
         //}
     }
 }

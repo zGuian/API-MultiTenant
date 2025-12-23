@@ -1,5 +1,6 @@
 ﻿using GearCore.Monolith.Core.Commons.Entities;
 using GearCore.Monolith.Core.Commons.Security;
+using GearCore.Monolith.Core.SalesCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Entities;
 
@@ -19,8 +20,10 @@ namespace GearCore.Monolith.Core.UserCore.Entities
         public bool PhoneNumberConfirmed { get; set; } = false;
         public int AccessFailedCount { get; set; }
         public string PasswordHash { get; set; } = string.Empty;
+
         public virtual ICollection<UserRoles> UserRoles { get; set; } = [];
         public virtual ICollection<TenantUser> TenantUsers { get; set; } = [];
+        public virtual ICollection<Sales> Sales { get; set; } = [];
 
         public User()
         {
@@ -42,8 +45,8 @@ namespace GearCore.Monolith.Core.UserCore.Entities
             CompleteName = $"{NormalizedFirstName} {NormalizedLastName}";
             PasswordHash = SecurityServices.ConvertPasswordInHash(password);
             PhoneNumber = phoneNumber;
-            CreatedBy = DateTimeOffset.UtcNow.LocalDateTime;
-            UpdatedBy = DateTimeOffset.UtcNow.LocalDateTime;
+            CreatedAt = DateTimeOffset.UtcNow.LocalDateTime;
+            UpdatedAt = DateTimeOffset.UtcNow.LocalDateTime;
         }
     }
 }

@@ -1,21 +1,18 @@
-﻿using GearCore.Monolith.Core.Commons.Entities;
-using GearCore.Monolith.Core.ProductCore.Entities;
+﻿using GearCore.Monolith.Core.StockCore.Entities.Enums;
 
 namespace GearCore.Monolith.Core.StockCore.Entities
 {
-    public class StockMoviments : BaseEntity
+    public class StockMoviments
     {
-        public int Quantity { get; set; }
-        public int PreviousQuantity { get; set; }
-        public int NewQuantity { get; set; }
+        public string Id { get; set; } = default!;
+        public StockMovementType Type { get; set; }
+        public decimal Quantity { get; set; } // + ou -
+        public string Reason { get; set; } = default!;
+        public string ReferenceId { get; set; } = default!; //SaleId ou SaleItemId
+        public DateTime CreatedAt { get; set; } = DateTimeOffset.UtcNow.LocalDateTime;
 
-        public DateTime MovementDate { get; set; }
-        public string MovementType { get; set; } = string.Empty;
-        public string Origin { get; set; } = string.Empty;
-        public string? Observation { get; set; } = string.Empty;
-
-        public virtual Product Product { get; set; } = new();
-        public Guid ProductId { get; set; }
+        public string StockId { get; set; } = default!;
+        public virtual ICollection<Stock> Stocks { get; set; } = [];
 
         public StockMoviments() { }
     }

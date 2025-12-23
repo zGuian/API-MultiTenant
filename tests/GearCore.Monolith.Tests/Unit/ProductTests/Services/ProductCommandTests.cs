@@ -100,7 +100,7 @@ namespace GearCore.Monolith.Tests.Unit.ProductTests.Services
 
             // Assert
             Assert.Equal("New Name", product.Name);
-            Assert.True(product.UpdatedBy <= DateTime.Now);
+            Assert.True(product.UpdatedAt <= DateTime.Now);
 
             _commandRepoMock.Verify(
                 r => r.Update(product),

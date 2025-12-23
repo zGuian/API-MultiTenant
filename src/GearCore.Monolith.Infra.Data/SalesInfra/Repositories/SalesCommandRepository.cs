@@ -13,5 +13,10 @@ namespace GearCore.Monolith.Infra.Data.SalesInfra.Repositories
     {
         private readonly AppDbContext _context = context;
         private readonly ILogger<SalesCommandRepository> _logger = logger;
+
+        public async Task CompleteSale()
+        {
+
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace GearCore.Monolith.Infra.Data.ProductInfra.Repositories
         public async Task<IEnumerable<Product>> GetPagedAsync(int pageIndex, int pageSize, CancellationToken ct = default)
             => await _context.Products.AsNoTracking()
                                       .Where(p => p.Tenant.Id == _tenantProvider.TenantId)
-                                      .OrderBy(p => p.CreatedBy)
+                                      .OrderBy(p => p.CreatedAt)
                                       .Skip((pageIndex - 1) * pageSize)
                                       .Take(pageSize)
                                       .ToListAsync(ct);

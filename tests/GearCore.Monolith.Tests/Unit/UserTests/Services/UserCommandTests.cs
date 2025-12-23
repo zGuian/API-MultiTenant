@@ -1,4 +1,5 @@
 ﻿using GearCore.Monolith.Core.Commons.Interfaces;
+using GearCore.Monolith.Core.TenantCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Services;
 using GearCore.Monolith.Core.UserCore.DTOs;
 using GearCore.Monolith.Core.UserCore.Entities;
@@ -12,7 +13,7 @@ namespace GearCore.Monolith.Tests.Unit.UserTests.Services
     public class UserCommandTests
     {
         private readonly Mock<IUserCommandRepository> _commandRepositoryMock;
-        private readonly Mock<ITenantCommand> _tenantCommandMock;
+        private readonly Mock<ITenantCommandRepository> _tenantCommandMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly Mock<IMapper> _mapperMock;
 
@@ -21,7 +22,7 @@ namespace GearCore.Monolith.Tests.Unit.UserTests.Services
         public UserCommandTests()
         {
             _commandRepositoryMock = new Mock<IUserCommandRepository>();
-            _tenantCommandMock = new Mock<ITenantCommand>();
+            _tenantCommandMock = new Mock<ITenantCommandRepository>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _mapperMock = new Mock<IMapper>();
 

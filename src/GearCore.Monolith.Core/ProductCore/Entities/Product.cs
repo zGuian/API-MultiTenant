@@ -1,4 +1,6 @@
 ﻿using GearCore.Monolith.Core.Commons.Entities;
+using GearCore.Monolith.Core.SalesCore.Entities;
+using GearCore.Monolith.Core.StockCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Entities;
 
 namespace GearCore.Monolith.Core.ProductCore.Entities
@@ -10,6 +12,10 @@ namespace GearCore.Monolith.Core.ProductCore.Entities
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
         public string? Brand { get; set; } = string.Empty;
+
+        public virtual ICollection<Stock> Stocks { get; set; } = [];
+        public virtual ICollection<SaleItem> SaleItems { get; set; } = [];
+
         public virtual Tenant Tenant { get; set; } = new();
         public string TenantID { get; set; } = string.Empty;
 
@@ -23,7 +29,7 @@ namespace GearCore.Monolith.Core.ProductCore.Entities
             Price = price;
             IsActive = isActive;
             Brand = brand;
-            UpdatedBy = DateTimeOffset.UtcNow.LocalDateTime;
+            UpdatedAt = DateTimeOffset.UtcNow.LocalDateTime;
         }
     }
 }

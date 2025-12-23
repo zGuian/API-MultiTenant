@@ -31,7 +31,7 @@ namespace GearCore.Monolith.Core.ProductCore.Services
             var product = await _productQuery.GetByIdAsync(dto.Id, ct)
                 ?? throw new KeyNotFoundException($"Product with Id {dto.Id} not found.");
             dto.Adapt(product);
-            product.UpdatedBy = DateTimeOffset.UtcNow.LocalDateTime;
+            product.UpdatedAt = DateTimeOffset.UtcNow.LocalDateTime;
             _productCommand.Update(product);
             await _unitOfWork.CommitAsync(ct);
         }
