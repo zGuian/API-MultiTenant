@@ -7,5 +7,16 @@
 
         public string RoleID { get; set; } = default!;
         public Roles Roles { get; set; } = default!;
+
+        public UserRoles()
+        { }
+
+        public UserRoles(User user, Roles role)
+        {
+            UserID = user.Id;
+            User = user;
+            RoleID = role.Id;
+            Roles = role;
+        }
     }
 }

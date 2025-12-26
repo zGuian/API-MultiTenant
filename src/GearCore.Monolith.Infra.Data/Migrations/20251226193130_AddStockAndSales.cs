@@ -26,12 +26,12 @@ namespace GearCore.Monolith.Infra.Data.Migrations
             migrationBuilder.RenameColumn(
                 name: "COL_UPDATE_BY",
                 table: "TB_USERS",
-                newName: "COL_UPDATE_AT");
+                newName: "UpdatedAt");
 
             migrationBuilder.RenameColumn(
                 name: "COL_CREATE_BY",
                 table: "TB_USERS",
-                newName: "COL_CREATE_AT");
+                newName: "CreatedAt");
 
             migrationBuilder.RenameColumn(
                 name: "COL_UPDATE_BY",
@@ -233,12 +233,12 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 newName: "Roles");
 
             migrationBuilder.RenameColumn(
-                name: "COL_UPDATE_AT",
+                name: "UpdatedAt",
                 table: "TB_USERS",
                 newName: "COL_UPDATE_BY");
 
             migrationBuilder.RenameColumn(
-                name: "COL_CREATE_AT",
+                name: "CreatedAt",
                 table: "TB_USERS",
                 newName: "COL_CREATE_BY");
 

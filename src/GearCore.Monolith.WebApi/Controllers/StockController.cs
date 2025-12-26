@@ -1,9 +1,11 @@
 ﻿using GearCore.Monolith.Core.StockCore.DTOs;
 using GearCore.Monolith.Core.StockCore.Interfaces.Services;
+using GearCore.Monolith.WebApi.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearCore.Monolith.WebApi.Controllers
 {
+    [RequireTenant]
     [ApiController]
     [Route("api/v1/Stocks")]
     public class StockController : ControllerBase

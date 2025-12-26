@@ -1,3 +1,4 @@
+using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.WebApi.Bootstrapper;
 using GearCore.Monolith.WebApi.Middlewares;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +23,13 @@ app.UseRouting();
 
 if (app.Environment.IsDevelopment())
 {
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await context.Database.MigrateAsync();
+        await SeedManualContext.SeedAsync(context);
+    }
+
     app.MapOpenApi(pattern: "/swagger/v1/swagger.json");
     app.UseSwaggerUI(opts =>
     {

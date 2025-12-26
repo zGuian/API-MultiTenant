@@ -15,5 +15,16 @@ namespace GearCore.Monolith.Core.TenantCore.Entities
         public virtual ICollection<Product> Products { get; set; } = [];
         public virtual ICollection<Sales> Sales { get; set; } = [];
         public virtual ICollection<Stock> Stocks { get; set; } = [];
+
+        public Tenant()
+        { }
+
+        public Tenant(string id, string name, string? subdomain, bool isActive)
+        {
+            Id = id;
+            Name = name;
+            Subdomain = subdomain;
+            IsActive = isActive;
+        }
     }
 }

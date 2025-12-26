@@ -18,7 +18,7 @@ namespace GearCore.Monolith.Infra.Data.Commons.Repositories
                 throw new Exception(ex.Message, ex);
             }
         }
-
+        
         public void Commit() => _context.SaveChanges();
     }
 }

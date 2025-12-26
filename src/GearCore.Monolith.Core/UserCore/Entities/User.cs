@@ -6,8 +6,9 @@ using GearCore.Monolith.Core.UserCore.Interfaces.Entities;
 
 namespace GearCore.Monolith.Core.UserCore.Entities
 {
-    public class User : BaseEntity, IUser
+    public class User : IUser
     {
+        public string Id { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string NormalizedFirstName { get; private set; }
         public string LastName { get; set; } = string.Empty;
@@ -20,6 +21,8 @@ namespace GearCore.Monolith.Core.UserCore.Entities
         public bool PhoneNumberConfirmed { get; set; } = false;
         public int AccessFailedCount { get; set; }
         public string PasswordHash { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; } 
+        public DateTime UpdatedAt { get; set; } 
 
         public virtual ICollection<UserRoles> UserRoles { get; set; } = [];
         public virtual ICollection<TenantUser> TenantUsers { get; set; } = [];

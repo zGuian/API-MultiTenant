@@ -21,6 +21,8 @@ namespace GearCore.Monolith.Core.SalesCore.Entities
 
         public virtual ICollection<SaleItem> SaleItems { get; set; } = [];
 
+
+
         public ValueResponse<bool> ConfirmSale()
         {
             if (Status == SaleStatus.Draft)

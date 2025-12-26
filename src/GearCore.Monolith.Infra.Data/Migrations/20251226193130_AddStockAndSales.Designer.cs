@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GearCore.Monolith.Infra.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251223042018_AddStockAndSales")]
+    [Migration("20251226193130_AddStockAndSales")]
     partial class AddStockAndSales
     {
         /// <inheritdoc />
@@ -66,7 +66,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnName("COL_PRICE")
                         .HasColumnOrder(3);
 
-                    b.Property<string>("TenantID")
+                    b.Property<string>("TenantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(36)")
                         .HasColumnName("FK_TENANT_ID")
@@ -78,7 +78,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantID", "Name", "Brand")
+                    b.HasIndex("TenantId", "Name", "Brand")
                         .IsUnique()
                         .HasFilter("[COL_BRAND] IS NOT NULL");
 
@@ -165,7 +165,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnName("COL_STATUS")
                         .HasColumnOrder(6);
 
-                    b.Property<string>("TenantID")
+                    b.Property<string>("TenantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(36)")
                         .HasColumnName("FK_TENANT_ID")
@@ -189,7 +189,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantID");
+                    b.HasIndex("TenantId");
 
                     b.HasIndex("UserId");
 
@@ -207,7 +207,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)")
                         .HasColumnName("COL_ACTIVE")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(6);
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
@@ -217,23 +217,23 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("FK_PRODUCT_ID")
-                        .HasColumnOrder(2);
+                        .HasColumnOrder(3);
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasColumnName("COL_QUANTITY")
-                        .HasColumnOrder(3);
+                        .HasColumnOrder(4);
 
                     b.Property<int>("ReservedQuantity")
                         .HasColumnType("int")
                         .HasColumnName("COL_RESERVED_QUANTITY")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(5);
 
                     b.Property<string>("TenantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(36)")
                         .HasColumnName("FK_TENANT_ID")
-                        .HasColumnOrder(1);
+                        .HasColumnOrder(2);
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
@@ -402,8 +402,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnOrder(5);
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("COL_CREATE_AT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -471,8 +470,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnOrder(10);
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("COL_UPDATE_AT");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -511,7 +509,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 {
                     b.HasOne("GearCore.Monolith.Core.TenantCore.Entities.Tenant", "Tenant")
                         .WithMany("Products")
-                        .HasForeignKey("TenantID")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -541,7 +539,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                 {
                     b.HasOne("GearCore.Monolith.Core.TenantCore.Entities.Tenant", "Tenant")
                         .WithMany("Sales")
-                        .HasForeignKey("TenantID")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

@@ -20,7 +20,7 @@ namespace GearCore.Monolith.Tests.Unit.TenantTests.Controllers
         public async Task GetAll_ShouldReturnOkWithTenants()
         {
             // Arrange
-            var tenants = new HashSet<TenantDto?>
+            var tenants = new HashSet<TenantViewDto?>
             {
                 new() { Id = "1", Name = "Tenant One" },
                 new() { Id = "2", Name = "Tenant Two" }
@@ -37,7 +37,7 @@ namespace GearCore.Monolith.Tests.Unit.TenantTests.Controllers
             // Assert
             var ok = Assert.IsType<OkObjectResult>(result);
 
-            var value = Assert.IsAssignableFrom<IEnumerable<TenantDto?>>(ok.Value);
+            var value = Assert.IsAssignableFrom<IEnumerable<TenantViewDto?>>(ok.Value);
 
             Assert.Equal(2, value.Count());
             Assert.Contains(value, t => t!.Id == "1");
@@ -51,7 +51,7 @@ namespace GearCore.Monolith.Tests.Unit.TenantTests.Controllers
         {
             // Arrange
             var tenantId = "tenant-1";
-            var tenantDto = new TenantDto
+            var tenantDto = new TenantViewDto
             {
                 Id = tenantId,
                 Name = "Tenant One",

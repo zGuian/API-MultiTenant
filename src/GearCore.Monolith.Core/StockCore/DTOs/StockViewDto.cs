@@ -2,15 +2,22 @@
 {
     public class StockViewDto
     {
-        public string Local { get; set; } = string.Empty;
-        public string? Description { get; set; } = string.Empty;
-        public bool IsActive { get; set; }
+        public string TenantId { get; set; } = default!;
+        public string ProductId { get; set; } = default!;
+        public int Quantity { get; set; }
+        public int ReservedQuantity { get; set; } = 0;
+        public bool Active { get; set; } = true;
 
-        public StockViewDto(string local, string? description, bool isActive)
+        public StockViewDto()
+        { }
+
+        public StockViewDto(string tenantId, string productId, int quantity, int reservedQuantity, bool active)
         {
-            Local = local;
-            Description = description;
-            IsActive = isActive;
+            TenantId = tenantId;
+            ProductId = productId;
+            Quantity = quantity;
+            ReservedQuantity = reservedQuantity;
+            Active = active;
         }
     }
 }

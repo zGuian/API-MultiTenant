@@ -14,7 +14,6 @@ namespace GearCore.Monolith.WebApi.Controllers
         public async Task<IActionResult> GetAll([FromServices] IProductQuery query,
             CancellationToken ct, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 15)
         {
-
             var result = await query.GetAllAsync(pageIndex, pageSize, ct);
             var totalItems = await query.CountAsync(ct);
             return Ok(new

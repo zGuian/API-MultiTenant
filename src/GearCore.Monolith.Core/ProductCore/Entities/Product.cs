@@ -2,6 +2,7 @@
 using GearCore.Monolith.Core.SalesCore.Entities;
 using GearCore.Monolith.Core.StockCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Entities;
+using System.Xml.Linq;
 
 namespace GearCore.Monolith.Core.ProductCore.Entities
 {
@@ -21,6 +22,35 @@ namespace GearCore.Monolith.Core.ProductCore.Entities
 
         public Product()
         { }
+
+        public Product(string tenantId, string name, string? description, decimal price, bool isActive,
+            string? brand)
+        {
+            Id = Guid.NewGuid().ToString();
+            TenantId = tenantId;
+            Name = name;
+            Description = description;
+            Price = price;
+            IsActive = isActive;
+            Brand = brand;
+            CreatedAt = DateTimeOffset.UtcNow.LocalDateTime;
+            UpdatedAt = DateTimeOffset.UtcNow.LocalDateTime;
+        }
+
+        public Product(Tenant tenant, string name, string? description, decimal price, bool isActive,
+            string? brand)
+        {
+            Id = Guid.NewGuid().ToString();
+            TenantId = tenant.Id;
+            Tenant = tenant;
+            Name = name;
+            Description = description;
+            Price = price;
+            IsActive = isActive;
+            Brand = brand;
+            CreatedAt = DateTimeOffset.UtcNow.LocalDateTime;
+            UpdatedAt = DateTimeOffset.UtcNow.LocalDateTime;
+        }
 
         public Product(string name, string? description, decimal price, bool isActive, string? brand)
         {

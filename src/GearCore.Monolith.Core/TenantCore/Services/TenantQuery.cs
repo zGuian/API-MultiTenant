@@ -9,16 +9,16 @@ namespace GearCore.Monolith.Core.TenantCore.Services
     {
         private readonly ITenantQueryRepository _queryRepository = tenantQueryRepository;
 
-        public async Task<HashSet<TenantDto?>> GetAllAsync(CancellationToken ct = default)
+        public async Task<HashSet<TenantViewDto?>> GetAllAsync(CancellationToken ct = default)
         {
             var models = await _queryRepository.GetAllToHashSet(ct);
-            return models.Adapt<HashSet<TenantDto?>>();
+            return models.Adapt<HashSet<TenantViewDto?>>();
         }
 
-        public async Task<TenantDto> GetByIdAsync(string id, CancellationToken ct = default)
+        public async Task<TenantViewDto> GetByIdAsync(string id, CancellationToken ct = default)
         {
             var tenant = await _queryRepository.GetByIdAsync(id, ct);
-            return tenant.Adapt<TenantDto>();
+            return tenant.Adapt<TenantViewDto>();
         }
     }
 }

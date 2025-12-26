@@ -14,14 +14,15 @@ namespace GearCore.Monolith.Infra.Data.UserInfra.Repositories
         , ILogger<UserQueryRepository> logger
         , IConfiguration configuration
         , ITenantProvider tenantProvider)
-        : BaseQueryRepository<User, string>(context, tenantProvider), IUserQueryRepository
+        : IUserQueryRepository
     {
         private readonly ILogger<UserQueryRepository> _logger = logger;
         private readonly AppDbContext _context = context;
         private readonly string _connectionString = configuration.GetConnectionString("SQLDefault")
             ?? throw new ArgumentNullException("ConnectionString:SQLDefault");
+        private readonly ITenantProvider tenantProvider = tenantProvider;
 
-        public override async Task<User> GetByIdAsync(string id, CancellationToken ct = default)
+        public async Task<User> GetByIdAsync(string id, CancellationToken ct = default)
         {
             var entity = await _context.Users.FirstOrDefaultAsync(e => e.Id ==id, ct)
                 ?? throw new NotFoundException("Entity not found");

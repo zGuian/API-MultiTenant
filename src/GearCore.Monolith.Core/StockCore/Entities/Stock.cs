@@ -7,7 +7,7 @@ namespace GearCore.Monolith.Core.StockCore.Entities
     public class Stock : BaseEntity
     {
         public override string TenantId { get; set; } = default!;
-        public Tenant Tenant { get; set; } = default!;
+        public virtual Tenant Tenant { get; set; } = default!;
 
         public string ProductId { get; set; } = default!;
         public virtual Product Product { get; set; } = default!;
@@ -17,6 +17,17 @@ namespace GearCore.Monolith.Core.StockCore.Entities
         public bool Active { get; set; } = true;
 
         public virtual ICollection<StockMoviments> StockMoviments { get; set; } = [];
+
+        public Stock()
+        { }
+
+        public Stock(Tenant tenant, Product product, int quantity, int reservedQuantity)
+        {
+            Tenant = tenant;
+            Product = product;
+            Quantity = quantity;
+            ReservedQuantity = reservedQuantity;
+        }
 
         public void SetValuesToEntity(string tenantId, string productId)
         {

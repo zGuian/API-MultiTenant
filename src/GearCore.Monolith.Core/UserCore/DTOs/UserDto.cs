@@ -13,7 +13,7 @@ namespace GearCore.Monolith.Core.UserCore.DTOs
         public string CompleteName { get; set; } = string.Empty;
         public string NormalizedEmail { get; set; } = string.Empty;
         public IEnumerable<RoleDto> Roles { get; set; } = [];
-        public IEnumerable<TenantDto> Tenants { get; set; } = [];
+        public IEnumerable<TenantViewDto> Tenants { get; set; } = [];
 
         public UserDto()
         { }
@@ -21,7 +21,7 @@ namespace GearCore.Monolith.Core.UserCore.DTOs
         public UserDto(IEnumerable<Roles> roles, IEnumerable<Tenant> tenants)
         {
             Roles = roles.Adapt<IEnumerable<RoleDto>>();
-            Tenants = tenants.Adapt<IEnumerable<TenantDto>>();
+            Tenants = tenants.Adapt<IEnumerable<TenantViewDto>>();
         }
     }
 }
