@@ -3,7 +3,7 @@ using GearCore.Monolith.Core.StockCore.Entities;
 
 namespace GearCore.Monolith.Core.StockCore.Interfaces.Repositories
 {
-    public interface IStockQueryRepository : IBaseQueryRepository<Stock, Guid>
+    public interface IStockQueryRepository : IBaseQueryRepository<Stock, string>
     {
     }
 }

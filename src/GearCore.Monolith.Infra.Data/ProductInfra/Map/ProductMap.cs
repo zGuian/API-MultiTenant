@@ -17,10 +17,10 @@ namespace GearCore.Monolith.Infra.Data.ProductInfra.Map
                 .HasColumnOrder(0)
                 .IsRequired(true);
 
-            builder.HasIndex(p => new { p.TenantID, p.Name, p.Brand })
+            builder.HasIndex(p => new { p.TenantId, p.Name, p.Brand })
                 .IsUnique();
 
-            builder.Property(p => p.TenantID)
+            builder.Property(p => p.TenantId)
                 .HasColumnName("FK_TENANT_ID")
                 .HasColumnOrder(6)
                 .IsRequired();
@@ -58,7 +58,7 @@ namespace GearCore.Monolith.Infra.Data.ProductInfra.Map
 
             builder.HasOne(p => p.Tenant)
                 .WithMany(t => t.Products)
-                .HasForeignKey(p => p.TenantID)
+                .HasForeignKey(p => p.TenantId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

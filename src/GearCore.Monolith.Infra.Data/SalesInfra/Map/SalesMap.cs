@@ -17,7 +17,7 @@ namespace GearCore.Monolith.Infra.Data.SalesInfra.Map
                    .HasColumnName("COL_ID")
                    .IsRequired();
 
-            builder.Property(s => s.TenantID)
+            builder.Property(s => s.TenantId)
                    .HasColumnOrder(1)
                    .HasColumnName("FK_TENANT_ID")
                    .IsRequired();
@@ -54,7 +54,7 @@ namespace GearCore.Monolith.Infra.Data.SalesInfra.Map
 
             builder.HasOne(s => s.Tenant)
                 .WithMany(t => t.Sales)
-                .HasForeignKey(s => s.TenantID)
+                .HasForeignKey(s => s.TenantId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(s => s.User)

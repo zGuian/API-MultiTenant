@@ -1,4 +1,5 @@
-﻿using GearCore.Monolith.Core.Exceptions;
+﻿using GearCore.Monolith.Core.Commons.Tenacy.Interfaces;
+using GearCore.Monolith.Core.Exceptions;
 using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Repositories;
 using GearCore.Monolith.Infra.Data.Commons.Context;
@@ -11,8 +12,9 @@ namespace GearCore.Monolith.Infra.Data.UserInfra.Repositories
 {
     public class UserQueryRepository(AppDbContext context
         , ILogger<UserQueryRepository> logger
-        , IConfiguration configuration)
-        : BaseQueryRepository<User, string>(context), IUserQueryRepository
+        , IConfiguration configuration
+        , ITenantProvider tenantProvider)
+        : BaseQueryRepository<User, string>(context, tenantProvider), IUserQueryRepository
     {
         private readonly ILogger<UserQueryRepository> _logger = logger;
         private readonly AppDbContext _context = context;

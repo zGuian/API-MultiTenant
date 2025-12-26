@@ -17,12 +17,6 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Map
                    .HasColumnName("COL_ID")
                    .IsRequired();
 
-            builder.Property(s => s.LocalName)
-                   .HasColumnOrder(1)
-                   .HasColumnName("COL_NAME")
-                   .HasMaxLength(50)
-                   .IsRequired();
-
             builder.Property(s => s.TenantId)
                    .HasColumnName("FK_TENANT_ID")
                    .HasColumnOrder(2)

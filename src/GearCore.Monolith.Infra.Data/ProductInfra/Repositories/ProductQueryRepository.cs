@@ -9,7 +9,7 @@ namespace GearCore.Monolith.Infra.Data.ProductInfra.Repositories
 {
     public class ProductQueryRepository(AppDbContext context
         , ITenantProvider tenantProvider)
-        : BaseQueryRepository<Product, string>(context)
+        : BaseQueryRepository<Product, string>(context, tenantProvider)
         , IProductQueryRepository
     {
         private readonly AppDbContext _context = context;

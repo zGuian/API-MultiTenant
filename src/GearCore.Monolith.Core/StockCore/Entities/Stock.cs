@@ -29,7 +29,7 @@ namespace GearCore.Monolith.Core.StockCore.Entities
             Product ??= new Product
             {
                 Id = productId,
-                TenantID = tenantId,
+                TenantId = tenantId,
                 Tenant = Tenant
             };
         }
