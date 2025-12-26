@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GearCore.Monolith.Infra.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251223003858_AddStockAndSales")]
+    [Migration("20251223042018_AddStockAndSales")]
     partial class AddStockAndSales
     {
         /// <inheritdoc />
@@ -207,7 +207,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)")
                         .HasColumnName("COL_ACTIVE")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(5);
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
@@ -219,23 +219,15 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnName("FK_PRODUCT_ID")
                         .HasColumnOrder(2);
 
-                    b.Property<decimal>("Quantity")
-                        .HasPrecision(18, 3)
-                        .HasColumnType("decimal(18,3)")
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int")
                         .HasColumnName("COL_QUANTITY")
-                        .HasColumnOrder(4);
-
-                    b.Property<decimal>("ReservedQuantity")
-                        .HasPrecision(18, 3)
-                        .HasColumnType("decimal(18,3)")
-                        .HasColumnName("COL_RESERVED_QUANTITY")
-                        .HasColumnOrder(5);
-
-                    b.Property<string>("StockMovimentsId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("FK_STOCK_MOVIMENTS")
                         .HasColumnOrder(3);
+
+                    b.Property<int>("ReservedQuantity")
+                        .HasColumnType("int")
+                        .HasColumnName("COL_RESERVED_QUANTITY")
+                        .HasColumnOrder(4);
 
                     b.Property<string>("TenantId")
                         .IsRequired()
@@ -250,8 +242,6 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("StockMovimentsId");
 
                     b.HasIndex("TenantId");
 
@@ -270,9 +260,8 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnName("COL_CREATE_AT")
                         .HasColumnOrder(6);
 
-                    b.Property<decimal>("Quantity")
-                        .HasPrecision(18, 3)
-                        .HasColumnType("decimal(18,3)")
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int")
                         .HasColumnName("COL_QUANTITY")
                         .HasColumnOrder(3);
 
@@ -290,9 +279,9 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnName("COL_REFERENCE_ID")
                         .HasColumnOrder(5);
 
-                    b.Property<string>("StockId")
+                    b.Property<string>("StocksId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("FK_STOCK_ID")
                         .HasColumnOrder(1);
 
@@ -303,6 +292,8 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .HasColumnOrder(2);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StocksId");
 
                     b.ToTable("TB_STOCK_MOVIMENTS", (string)null);
                 });
@@ -388,7 +379,7 @@ namespace GearCore.Monolith.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("TB_ROLE", (string)null);
                 });
 
             modelBuilder.Entity("GearCore.Monolith.Core.UserCore.Entities.User", b =>
@@ -573,12 +564,6 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GearCore.Monolith.Core.StockCore.Entities.StockMoviments", "StockMoviments")
-                        .WithMany("Stocks")
-                        .HasForeignKey("StockMovimentsId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("GearCore.Monolith.Core.TenantCore.Entities.Tenant", "Tenant")
                         .WithMany("Stocks")
                         .HasForeignKey("TenantId")
@@ -587,9 +572,18 @@ namespace GearCore.Monolith.Infra.Data.Migrations
 
                     b.Navigation("Product");
 
-                    b.Navigation("StockMoviments");
-
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("GearCore.Monolith.Core.StockCore.Entities.StockMoviments", b =>
+                {
+                    b.HasOne("GearCore.Monolith.Core.StockCore.Entities.Stock", "Stocks")
+                        .WithMany("StockMoviments")
+                        .HasForeignKey("StocksId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Stocks");
                 });
 
             modelBuilder.Entity("GearCore.Monolith.Core.TenantCore.Entities.TenantUser", b =>
@@ -642,9 +636,9 @@ namespace GearCore.Monolith.Infra.Data.Migrations
                     b.Navigation("SaleItems");
                 });
 
-            modelBuilder.Entity("GearCore.Monolith.Core.StockCore.Entities.StockMoviments", b =>
+            modelBuilder.Entity("GearCore.Monolith.Core.StockCore.Entities.Stock", b =>
                 {
-                    b.Navigation("Stocks");
+                    b.Navigation("StockMoviments");
                 });
 
             modelBuilder.Entity("GearCore.Monolith.Core.TenantCore.Entities.Tenant", b =>

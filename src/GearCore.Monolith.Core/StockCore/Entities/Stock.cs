@@ -6,17 +6,32 @@ namespace GearCore.Monolith.Core.StockCore.Entities
 {
     public class Stock : BaseEntity
     {
-        public string TenantId { get; set; } = default!;
+        public override string TenantId { get; set; } = default!;
         public Tenant Tenant { get; set; } = default!;
 
         public string ProductId { get; set; } = default!;
         public virtual Product Product { get; set; } = default!;
 
-        public decimal Quantity { get; set; }
-        public decimal ReservedQuantity { get; set; }
+        public int Quantity { get; set; }
+        public int ReservedQuantity { get; set; } = 0;
         public bool Active { get; set; } = true;
 
-        public virtual StockMoviments StockMoviments { get; set; } = new();
-        public string StockMovimentsId { get; set; } = default!;
+        public virtual ICollection<StockMoviments> StockMoviments { get; set; } = [];
+
+        public void SetValuesToEntity(string tenantId, string productId)
+        {
+            TenantId ??= tenantId;
+            Tenant ??= new Tenant
+            {
+                Id = tenantId,
+            };
+            ProductId ??= productId;
+            Product ??= new Product
+            {
+                Id = productId,
+                TenantID = tenantId,
+                Tenant = Tenant
+            };
+        }
     }
 }

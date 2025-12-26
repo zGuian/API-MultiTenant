@@ -17,7 +17,7 @@ namespace GearCore.Monolith.Core.ProductCore.Entities
         public virtual ICollection<SaleItem> SaleItems { get; set; } = [];
 
         public virtual Tenant Tenant { get; set; } = new();
-        public string TenantID { get; set; } = string.Empty;
+        public override string TenantId { get; set; } = string.Empty;
 
         public Product()
         { }

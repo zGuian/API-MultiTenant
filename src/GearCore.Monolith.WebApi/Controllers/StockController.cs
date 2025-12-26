@@ -16,15 +16,6 @@ namespace GearCore.Monolith.WebApi.Controllers
             return Ok(stocks);
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetStockByProductId([FromServices] IStockQuery query
-            , [FromRoute] Guid id
-            , CancellationToken ct)
-        {
-            var stock =  await query.GetByIdAsync(id, ct);
-            return Ok(stock);
-        }
-
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterStock([FromServices] IStockCommand command
             , [FromBody] RegisterStockDto dto

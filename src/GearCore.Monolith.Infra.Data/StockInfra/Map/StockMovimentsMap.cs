@@ -18,9 +18,9 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Map
                    .HasColumnOrder(0)
                    .IsRequired();
 
-            builder.Property(s => s.StockId)
-                   .HasColumnName("FK_STOCK_ID")
+            builder.Property(sm => sm.StocksId)
                    .HasColumnOrder(1)
+                   .HasColumnName("FK_STOCK_ID")
                    .IsRequired();
 
             builder.Property(s => s.Type)
@@ -33,7 +33,6 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Map
             builder.Property(s => s.Quantity)
                    .HasColumnName("COL_QUANTITY")
                    .HasColumnOrder(3)
-                   .HasPrecision(18, 3)
                    .IsRequired();
 
             builder.Property(s => s.Reason)
@@ -52,6 +51,11 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Map
                    .HasColumnName("COL_CREATE_AT")
                    .HasColumnOrder(6)
                    .IsRequired();
+
+            builder.HasOne(sm => sm.Stocks)
+                   .WithMany(s => s.StockMoviments)
+                   .HasForeignKey(sm => sm.StocksId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

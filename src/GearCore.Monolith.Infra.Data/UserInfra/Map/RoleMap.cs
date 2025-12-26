@@ -8,6 +8,8 @@ namespace GearCore.Monolith.Infra.Data.UserInfra.Map
     {
         public void Configure(EntityTypeBuilder<Roles> builder)
         {
+            builder.ToTable("TB_ROLE");
+
             builder.HasKey(r => r.Id);
             builder.Property(r => r.Id)
                 .HasColumnOrder(0)

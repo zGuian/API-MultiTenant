@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using GearCore.Monolith.Core.Commons.Tenacy.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GearCore.Monolith.Core.Commons.Entities
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity : ITenantProvider
     {
         [Column("COL_ID", Order = 0)]
         public virtual string Id { get; set; } = Guid.NewGuid().ToString();
+
+        public virtual string TenantId { get; set; } = default!;
 
         [Column("COL_CREATE_AT")]
         public DateTime CreatedAt { get; set; }

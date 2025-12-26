@@ -14,7 +14,7 @@ namespace GearCore.Monolith.Core.SalesCore.Entities
         public SaleStatus Status { get; set; }
 
         public virtual Tenant Tenant { get; set; } = default!;
-        public string TenantID { get; set; } = default!;
+        public override string TenantId { get; set; } = default!;
 
         public virtual User User { get; set; } = default!;
         public string UserId { get; set; } = default!;

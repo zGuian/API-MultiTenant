@@ -6,13 +6,13 @@ namespace GearCore.Monolith.Core.StockCore.Entities
     {
         public string Id { get; set; } = default!;
         public StockMovementType Type { get; set; }
-        public decimal Quantity { get; set; } // + ou -
+        public int Quantity { get; set; } // + ou -
         public string Reason { get; set; } = default!;
         public string ReferenceId { get; set; } = default!; //SaleId ou SaleItemId
         public DateTime CreatedAt { get; set; } = DateTimeOffset.UtcNow.LocalDateTime;
 
-        public string StockId { get; set; } = default!;
-        public virtual ICollection<Stock> Stocks { get; set; } = [];
+        public string StocksId { get; set; } = default!;
+        public virtual Stock Stocks { get; set; } = new();
 
         public StockMoviments() { }
     }

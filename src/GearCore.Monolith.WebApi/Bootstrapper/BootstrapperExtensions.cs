@@ -1,4 +1,6 @@
 ﻿using GearCore.Monolith.Core.Commons.Interfaces;
+using GearCore.Monolith.Core.Commons.Tenacy;
+using GearCore.Monolith.Core.Commons.Tenacy.Interfaces;
 using GearCore.Monolith.Core.Commons.Utils.Converters;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Services;
@@ -13,7 +15,6 @@ using GearCore.Monolith.Core.UserCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.UserCore.Interfaces.Services;
 using GearCore.Monolith.Core.UserCore.Services;
 using GearCore.Monolith.Infra.CC.Tenacy;
-using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
 using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;

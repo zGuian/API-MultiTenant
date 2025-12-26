@@ -1,6 +1,6 @@
-﻿using GearCore.Monolith.Core.ProductCore.Entities;
+﻿using GearCore.Monolith.Core.Commons.Tenacy.Interfaces;
+using GearCore.Monolith.Core.ProductCore.Entities;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Repositories;
-using GearCore.Monolith.Infra.CC.Tenacy.Interfaces;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
 using Microsoft.EntityFrameworkCore;
