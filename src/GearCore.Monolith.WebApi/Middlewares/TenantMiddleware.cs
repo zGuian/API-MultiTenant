@@ -18,10 +18,16 @@ namespace GearCore.Monolith.WebApi.Middlewares
 
             string? tenantId = null;
 
-            if (context.Request.Headers.TryGetValue("X-Tenant-ID", out var headerTenantId))
-                tenantId = headerTenantId.ToString();
+            if (context.User.Identity?.IsAuthenticated == true)
+            {
+                tenantId = context.User.FindFirst("TenantId")?.Value;
+            }
 
-            tenantId ??= context.User.FindFirst("tenant")?.Value;
+            if (tenantId == null)
+            {
+                if (context.Request.Headers.TryGetValue("X-Tenant-ID", out var headerTenantId))
+                    tenantId = headerTenantId.ToString();
+            }
 
             if (tenantId == null)
             {

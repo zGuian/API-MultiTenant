@@ -1,16 +1,16 @@
-﻿using GearCore.Monolith.Core.Exceptions;
+﻿using GearCore.Monolith.Core.TenantCore.Entities.Enums;
 using GearCore.Monolith.Core.UserCore.DTOs;
 using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Services;
-using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
+using GearCore.Monolith.Infra.Data.Commons.TokenJwt.Interfaces;
 using GearCore.Monolith.WebApi.Attributes;
 using MapsterMapper;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GearCore.Monolith.WebApi.Controllers
 {
+    [Authorize(Roles = nameof(RoleTenantEnum.SYSTEM_USER))]
     [ApiController]
     [RequireTenant]
     [Route("api/v1/[controller]")]
@@ -50,23 +50,6 @@ namespace GearCore.Monolith.WebApi.Controllers
         {
             var users = await _query.GetPageAsync(pageIndex, pageSize);
             return Ok(users);
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
-        {
-            var user = await _query.FindByEmailAsync(dto.Email) ?? throw new NotFoundException("Email inválido!");
-            var checkPassword = _query.CheckPasswordSignIn(user, dto.Password);
-            if (!checkPassword)
-            {
-                throw new UnauthorizedAccessException("Senha incorreta");
-            }
-            var roles = await _query.GetRolesAsync(user);
-            var token = _jwtServices.GenerateToken(user, roles);
-            var refreshToken = Guid.NewGuid().ToString();
-            Response.Headers.Append("X-Auth-AccessToken", token);
-            Response.Headers.Append("X-Auth-RefreshToken", refreshToken);
-            return Ok(token);
         }
 
         [HttpPost("register")]
