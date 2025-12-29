@@ -1,10 +1,13 @@
 ﻿using GearCore.Monolith.Core.ProductCore.DTOs;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Services;
+using GearCore.Monolith.Core.TenantCore.Entities.Enums;
 using GearCore.Monolith.WebApi.Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearCore.Monolith.WebApi.Controllers
 {
+    [Authorize(Roles = nameof(RoleTenantEnum.SYSTEM_USER))]
     [ApiController]
     [RequireTenant]
     [Route("api/v1/[controller]")]

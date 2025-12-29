@@ -14,17 +14,20 @@ using GearCore.Monolith.Core.TenantCore.Services;
 using GearCore.Monolith.Core.UserCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.UserCore.Interfaces.Services;
 using GearCore.Monolith.Core.UserCore.Services;
-using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
 using GearCore.Monolith.Infra.Data.Commons.TokenJwt;
+using GearCore.Monolith.Infra.Data.Commons.TokenJwt.Interfaces;
 using GearCore.Monolith.Infra.Data.ProductInfra.Repositories;
 using GearCore.Monolith.Infra.Data.StockInfra.Repositories;
 using GearCore.Monolith.Infra.Data.TenantInfra.Repositories;
 using GearCore.Monolith.Infra.Data.UserInfra.Repositories;
 using Mapster;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace GearCore.Monolith.WebApi.Bootstrapper
 {
@@ -32,7 +35,7 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
     {
         public static IServiceCollection AddDependencyInjection(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddCoreDependencies();
+            services.AddCoreDependencies(configuration);
             services.AddInfrastructureDependencies(configuration);
 
             services.AddMapster();
@@ -41,14 +44,16 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
         }
 
         #region Core
-        private static void AddCoreDependencies(this IServiceCollection services)
+        private static void AddCoreDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            AddServices(services);
+            AddServices(services, configuration);
             AddMapsterDependecies(services);
         }
 
-        private static void AddServices(IServiceCollection services)
+        private static void AddServices(IServiceCollection services, IConfiguration configuration)
         {
+            AddAuthServices(services, configuration);
+
             services.AddScoped<IUserCommand, UserCommand>();
             services.AddScoped<IUserQuery, UserQuery>();
 
@@ -66,6 +71,29 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
         {
             services.AddMapster();
             MapsterConfig.Configure();
+        }
+
+        private static void AddAuthServices(IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtKey = configuration["Jwt:Key"]!;
+            var jwtIssuer = configuration["Jwt:Issuer"]!;
+            var jwtAudience = configuration["Jwt:Audience"]!;
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(opts =>
+                    {
+                        opts.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+
+                            ValidIssuer = jwtIssuer,
+                            ValidAudience = jwtAudience,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                        };
+                    });
         }
         #endregion Core
 

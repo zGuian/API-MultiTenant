@@ -1,6 +1,6 @@
 ﻿using GearCore.Monolith.Core.UserCore.Entities;
 
-namespace GearCore.Monolith.Infra.CC.TokenJwt.Interfaces
+namespace GearCore.Monolith.Infra.Data.Commons.TokenJwt.Interfaces
 {
     public interface IJwtServices
     {

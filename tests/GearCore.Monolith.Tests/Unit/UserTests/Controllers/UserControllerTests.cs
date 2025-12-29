@@ -1,7 +1,7 @@
 ﻿using GearCore.Monolith.Core.UserCore.DTOs;
 using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Services;
-using GearCore.Monolith.Infra.CC.TokenJwt.Interfaces;
+using GearCore.Monolith.Infra.Data.Commons.TokenJwt.Interfaces;
 using GearCore.Monolith.WebApi.Controllers;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
