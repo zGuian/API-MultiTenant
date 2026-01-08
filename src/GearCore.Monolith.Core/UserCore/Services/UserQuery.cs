@@ -11,13 +11,13 @@ namespace GearCore.Monolith.Core.UserCore.Services
     {
         private readonly IUserQueryRepository _queryRepository = queryRepository;
 
-        public bool CheckPasswordSignIn(User user, string password) 
+        public bool CheckPasswordSignIn(User user, string password)
             => SecurityServices.VerifyPassword(password, user.PasswordHash);
 
-        public async Task<User?> FindByEmailAsync(string email) 
+        public async Task<User?> FindByEmailAsync(string email)
             => await _queryRepository.FindByEmailAsync(email);
 
-        public async Task<User?> FindByNameAsync(string name) 
+        public async Task<User?> FindByNameAsync(string name)
             => await _queryRepository.FindByNameAsync(name);
 
         public async Task<IEnumerable<UserDto>> GetPageAsync(int pageIndex, int pageSize)

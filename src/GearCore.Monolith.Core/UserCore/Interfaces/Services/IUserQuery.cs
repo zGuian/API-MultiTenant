@@ -1,6 +1,5 @@
 ﻿using GearCore.Monolith.Core.UserCore.DTOs;
 using GearCore.Monolith.Core.UserCore.Entities;
-using GearCore.Monolith.Core.UserCore.Enums;
 
 namespace GearCore.Monolith.Core.UserCore.Interfaces.Services
 {

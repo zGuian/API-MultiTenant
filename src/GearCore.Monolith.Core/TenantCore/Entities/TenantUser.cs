@@ -17,7 +17,7 @@ namespace GearCore.Monolith.Core.TenantCore.Entities
         public DateTime CreatedBy { get; set; } = DateTimeOffset.Now.Date;
 
         public TenantUser()
-        { 
+        {
         }
 
         public TenantUser(User user, Tenant tenant)

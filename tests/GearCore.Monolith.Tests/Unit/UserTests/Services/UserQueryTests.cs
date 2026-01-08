@@ -1,5 +1,4 @@
-﻿using GearCore.Monolith.Core.Commons.Security;
-using GearCore.Monolith.Core.UserCore.Entities;
+﻿using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.UserCore.Services;
 using Moq;

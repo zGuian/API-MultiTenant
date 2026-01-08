@@ -2,10 +2,8 @@
 using GearCore.Monolith.Core.ProductCore.Entities;
 using GearCore.Monolith.Core.StockCore.Entities;
 using GearCore.Monolith.Core.StockCore.Interfaces.Repositories;
-using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
-using GearCore.Monolith.Infra.Data.StockInfra.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

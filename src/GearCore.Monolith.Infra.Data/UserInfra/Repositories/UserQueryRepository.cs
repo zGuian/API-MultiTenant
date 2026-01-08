@@ -1,10 +1,8 @@
 ﻿using GearCore.Monolith.Core.Commons.Tenacy.Interfaces;
 using GearCore.Monolith.Core.Exceptions;
 using GearCore.Monolith.Core.UserCore.Entities;
-using GearCore.Monolith.Core.UserCore.Enums;
 using GearCore.Monolith.Core.UserCore.Interfaces.Repositories;
 using GearCore.Monolith.Infra.Data.Commons.Context;
-using GearCore.Monolith.Infra.Data.Commons.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -25,12 +23,12 @@ namespace GearCore.Monolith.Infra.Data.UserInfra.Repositories
 
         public async Task<User> GetByIdAsync(string id, CancellationToken ct = default)
         {
-            var entity = await _context.Users.FirstOrDefaultAsync(e => e.Id ==id, ct)
+            var entity = await _context.Users.FirstOrDefaultAsync(e => e.Id == id, ct)
                 ?? throw new NotFoundException("Entity not found");
             return entity;
         }
 
-        public async Task<IEnumerable<User>> GetPageAsync(int pageIndex, int pageSize) 
+        public async Task<IEnumerable<User>> GetPageAsync(int pageIndex, int pageSize)
             => await _context.Users.AsNoTracking()
                                    .Include(tu => tu.TenantUsers)
                                    .ThenInclude(t => t.Tenant)

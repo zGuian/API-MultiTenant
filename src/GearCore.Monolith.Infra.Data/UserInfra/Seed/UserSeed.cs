@@ -1,5 +1,4 @@
-﻿using GearCore.Monolith.Core.TenantCore.Entities;
-using GearCore.Monolith.Core.UserCore.Entities;
+﻿using GearCore.Monolith.Core.UserCore.Entities;
 
 namespace GearCore.Monolith.Infra.Data.UserInfra.Seed
 {
@@ -7,7 +6,7 @@ namespace GearCore.Monolith.Infra.Data.UserInfra.Seed
     {
         public static IEnumerable<User> GetSeeds()
         {
-            return 
+            return
             [
                 new User(
                 firtsName: "Admin",

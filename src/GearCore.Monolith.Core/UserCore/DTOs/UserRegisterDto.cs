@@ -1,6 +1,4 @@
-﻿using GearCore.Monolith.Core.UserCore.Entities;
-
-namespace GearCore.Monolith.Core.UserCore.DTOs
+﻿namespace GearCore.Monolith.Core.UserCore.DTOs
 {
     public class UserRegisterDto
     {

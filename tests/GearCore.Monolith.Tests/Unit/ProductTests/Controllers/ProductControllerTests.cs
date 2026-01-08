@@ -3,9 +3,6 @@ using GearCore.Monolith.Core.ProductCore.Interfaces.Services;
 using GearCore.Monolith.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GearCore.Monolith.Tests.Unit.ProductTests.Controllers
 {

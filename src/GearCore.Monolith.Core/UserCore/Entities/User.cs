@@ -1,5 +1,4 @@
-﻿using GearCore.Monolith.Core.Commons.Entities;
-using GearCore.Monolith.Core.Commons.Security;
+﻿using GearCore.Monolith.Core.Commons.Security;
 using GearCore.Monolith.Core.SalesCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Entities;
@@ -21,8 +20,8 @@ namespace GearCore.Monolith.Core.UserCore.Entities
         public bool PhoneNumberConfirmed { get; set; } = false;
         public int AccessFailedCount { get; set; }
         public string PasswordHash { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; } 
-        public DateTime UpdatedAt { get; set; } 
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public virtual ICollection<UserRoles> UserRoles { get; set; } = [];
         public virtual ICollection<TenantUser> TenantUsers { get; set; } = [];

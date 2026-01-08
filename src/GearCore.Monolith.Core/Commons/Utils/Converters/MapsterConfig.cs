@@ -1,6 +1,4 @@
-﻿using GearCore.Monolith.Core.ProductCore.Converters;
-using GearCore.Monolith.Core.StockCore.Converters;
-using GearCore.Monolith.Core.UserCore.Converters;
+﻿using GearCore.Monolith.Core.UserCore.Converters;
 
 namespace GearCore.Monolith.Core.Commons.Utils.Converters
 {

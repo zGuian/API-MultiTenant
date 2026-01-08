@@ -1,6 +1,4 @@
-﻿using GearCore.Monolith.Core.UserCore.Entities;
-
-namespace GearCore.Monolith.Core.Commons.Security
+﻿namespace GearCore.Monolith.Core.Commons.Security
 {
     public static class SecurityServices
     {

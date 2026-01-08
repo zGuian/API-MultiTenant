@@ -1,7 +1,4 @@
-﻿using GearCore.Monolith.Core.ProductCore.DTOs;
-using System.Net.Http.Json;
-
-namespace GearCore.Monolith.Tests.Integration
+﻿namespace GearCore.Monolith.Tests.Integration
 {
     //public class ProductTests(WebApiApplication factory) : IClassFixture<WebApiApplication>
     //{

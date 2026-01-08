@@ -1,6 +1,5 @@
 ﻿using GearCore.Monolith.Core.Commons.Interfaces;
 using GearCore.Monolith.Core.TenantCore.Interfaces.Repositories;
-using GearCore.Monolith.Core.TenantCore.Interfaces.Services;
 using GearCore.Monolith.Core.UserCore.DTOs;
 using GearCore.Monolith.Core.UserCore.Entities;
 using GearCore.Monolith.Core.UserCore.Interfaces.Repositories;

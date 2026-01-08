@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace GearCore.Monolith.Infra.Data.SalesInfra.Repositories
 {
     public class SalesCommandRepository(AppDbContext context
-        , ILogger<SalesCommandRepository> logger) 
+        , ILogger<SalesCommandRepository> logger)
         : BaseCommandRepository<Sales, string>(context)
         , ISalesCommandRepository
     {

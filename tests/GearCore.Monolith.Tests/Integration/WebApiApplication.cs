@@ -1,10 +1,4 @@
-﻿using GearCore.Monolith.Infra.Data.Commons.Context;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-namespace GearCore.Monolith.Tests.Integration
+﻿namespace GearCore.Monolith.Tests.Integration
 {
     //public class WebApiApplication : WebApplicationFactory<Program>
     //{

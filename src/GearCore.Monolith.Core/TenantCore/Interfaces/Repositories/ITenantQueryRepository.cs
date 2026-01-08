@@ -1,6 +1,4 @@
-﻿
-using GearCore.Monolith.Core.Commons.Interfaces;
-using GearCore.Monolith.Core.TenantCore.Entities;
+﻿using GearCore.Monolith.Core.TenantCore.Entities;
 
 namespace GearCore.Monolith.Core.TenantCore.Interfaces.Repositories
 {

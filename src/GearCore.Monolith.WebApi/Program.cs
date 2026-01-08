@@ -1,6 +1,5 @@
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.WebApi.Bootstrapper;
-using GearCore.Monolith.WebApi.Filters;
 using GearCore.Monolith.WebApi.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

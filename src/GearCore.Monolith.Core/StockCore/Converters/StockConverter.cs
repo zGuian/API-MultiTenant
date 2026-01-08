@@ -1,8 +1,4 @@
-﻿using GearCore.Monolith.Core.StockCore.DTOs;
-using GearCore.Monolith.Core.StockCore.Entities;
-using Mapster;
-
-namespace GearCore.Monolith.Core.StockCore.Converters
+﻿namespace GearCore.Monolith.Core.StockCore.Converters
 {
     public static class StockConverter
     {

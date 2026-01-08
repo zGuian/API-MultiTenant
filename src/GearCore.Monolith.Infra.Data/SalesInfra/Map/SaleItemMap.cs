@@ -34,7 +34,7 @@ namespace GearCore.Monolith.Infra.Data.SalesInfra.Map
             builder.Property(si => si.UnitPrice)
                    .HasColumnOrder(4)
                    .HasColumnName("COL_UNIT_PRICE")
-                   .HasPrecision(18,2)
+                   .HasPrecision(18, 2)
                    .IsRequired();
 
             builder.Property(si => si.Quantity)

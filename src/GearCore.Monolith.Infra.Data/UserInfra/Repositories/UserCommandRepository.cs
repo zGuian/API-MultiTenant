@@ -9,7 +9,7 @@ namespace GearCore.Monolith.Infra.Data.UserInfra.Repositories
 {
     public class UserCommandRepository(AppDbContext context
         , ILogger<UserCommandRepository> logger
-        , IConfiguration configuration) 
+        , IConfiguration configuration)
         : BaseCommandRepository<User, string>(context), IUserCommandRepository
     {
         private readonly ILogger<UserCommandRepository> _logger = logger;

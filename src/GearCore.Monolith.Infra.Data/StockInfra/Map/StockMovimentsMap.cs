@@ -26,7 +26,7 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Map
             builder.Property(s => s.Type)
                    .HasColumnName("COL_TYPE")
                    .HasColumnOrder(2)
-                   .HasConversion(sm => sm.ToString(), 
+                   .HasConversion(sm => sm.ToString(),
                                sm => Enum.Parse<StockMovementType>(sm))
                    .IsRequired();
 

@@ -2,7 +2,6 @@
 using GearCore.Monolith.Core.SalesCore.Entities;
 using GearCore.Monolith.Core.StockCore.Entities;
 using GearCore.Monolith.Core.TenantCore.Entities;
-using System.Xml.Linq;
 
 namespace GearCore.Monolith.Core.ProductCore.Entities
 {

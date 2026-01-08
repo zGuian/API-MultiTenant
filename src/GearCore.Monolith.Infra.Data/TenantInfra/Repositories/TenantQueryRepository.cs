@@ -13,7 +13,7 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Repositories
         private readonly ILogger<TenantQueryRepository> _logger = logger;
         private readonly AppDbContext _context = context;
 
-        public async Task<HashSet<Tenant>> GetAllToHashSet(CancellationToken ct = default) 
+        public async Task<HashSet<Tenant>> GetAllToHashSet(CancellationToken ct = default)
             => await _context.Tenants.ToHashSetAsync(ct);
 
         public async Task<Tenant> GetByIdAsync(string id, CancellationToken ct = default)
