@@ -1,4 +1,5 @@
 ﻿using GearCore.Monolith.Core.Commons.Tenacy.Interfaces;
+using GearCore.Monolith.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace GearCore.Monolith.Core.Commons.Tenacy
@@ -13,18 +14,19 @@ namespace GearCore.Monolith.Core.Commons.Tenacy
             {
                 // 1. Header
                 if (_context.HttpContext?.Request.Headers.TryGetValue("X-Tenant-ID", out var headerTenant) == true)
-                    return headerTenant!;
+                {
+                    if (!string.IsNullOrEmpty(headerTenant))
+                        return headerTenant!;
+                }
 
                 // 2. Claims
                 var claim = _context.HttpContext?.User.Claims
-                    .FirstOrDefault(c => c.Type == "tenant");
+                    .FirstOrDefault(c => c.Type == "TenantId");
 
                 if (claim != null)
                     return claim.Value;
 
-                // 3. Design-time (EF migrations)
-                // HttpContext == null → MIGRATION MODE
-                return "master"; // <-- TENANT DEFAULT
+                throw new NotFoundException("TenantId não encontrado HTTP");
             }
         }
     }

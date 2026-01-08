@@ -21,12 +21,9 @@ namespace GearCore.Monolith.WebApi.Controllers
             var totalItems = await query.CountAsync(ct);
             return Ok(new
             {
-                pagination = new
-                {
-                    currentPage = pageIndex,
-                    pageSize = pageSize,
-                    totalItems
-                },
+                currentPage = pageIndex,
+                pageSize,
+                totalItems,
                 items = result
             });
         }

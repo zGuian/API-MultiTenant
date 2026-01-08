@@ -9,8 +9,8 @@ namespace GearCore.Monolith.Core.StockCore.Converters
         [Obsolete("Não esta em uso", true)]
         public static void StockConverters()
         {
-            TypeAdapterConfig<Stock, StockViewDto>.NewConfig()
-                .ConstructUsing(e => new StockViewDto(e.TenantId, e.ProductId, e.Quantity, e.ReservedQuantity, e.Active));
+            //TypeAdapterConfig<Stock, StockViewDto>.NewConfig()
+            //    .ConstructUsing(e => new StockViewDto(e.TenantId, e.ProductId, e.Quantity, e.ReservedQuantity, e.Active));
         }
     }
 }

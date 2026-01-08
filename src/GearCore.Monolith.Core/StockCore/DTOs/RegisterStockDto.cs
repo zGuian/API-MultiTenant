@@ -5,7 +5,7 @@ namespace GearCore.Monolith.Core.StockCore.DTOs
     public class RegisterStockDto
     {
         public string ProductId { get; set; } = default!;
-        public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
         public bool Active { get; set; } = true;
 
         [JsonIgnore]

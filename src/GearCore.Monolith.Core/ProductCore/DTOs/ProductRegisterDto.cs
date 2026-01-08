@@ -11,6 +11,6 @@ namespace GearCore.Monolith.Core.ProductCore.DTOs
         public string? Brand { get; set; } = string.Empty;
 
         [JsonIgnore]
-        public DateTime CreatedBy { get; set; } = DateTimeOffset.UtcNow.LocalDateTime;
+        public DateTime CreatedAt { get; set; } = DateTimeOffset.UtcNow.LocalDateTime;
     }
 }

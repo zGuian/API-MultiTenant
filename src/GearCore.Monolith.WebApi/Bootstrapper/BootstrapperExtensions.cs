@@ -22,6 +22,7 @@ using GearCore.Monolith.Infra.Data.ProductInfra.Repositories;
 using GearCore.Monolith.Infra.Data.StockInfra.Repositories;
 using GearCore.Monolith.Infra.Data.TenantInfra.Repositories;
 using GearCore.Monolith.Infra.Data.UserInfra.Repositories;
+using GearCore.Monolith.WebApi.Filters;
 using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -53,6 +54,7 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
         private static void AddServices(IServiceCollection services, IConfiguration configuration)
         {
             AddAuthServices(services, configuration);
+            AddFilterDependencies(services);
 
             services.AddScoped<IUserCommand, UserCommand>();
             services.AddScoped<IUserQuery, UserQuery>();
@@ -65,12 +67,18 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
 
             services.AddScoped<IProductCommand, ProductCommand>();
             services.AddScoped<IProductQuery, ProductQuery>();
+
         }
 
         private static void AddMapsterDependecies(this IServiceCollection services)
         {
             services.AddMapster();
             MapsterConfig.Configure();
+        }
+
+        private static void AddFilterDependencies(this IServiceCollection services)
+        {
+            services.AddSingleton<PerformanceMonitorFilter>();
         }
 
         private static void AddAuthServices(IServiceCollection services, IConfiguration configuration)

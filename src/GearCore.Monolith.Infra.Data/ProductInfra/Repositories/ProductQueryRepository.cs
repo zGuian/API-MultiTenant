@@ -15,16 +15,22 @@ namespace GearCore.Monolith.Infra.Data.ProductInfra.Repositories
         private readonly AppDbContext _context = context;
         private readonly ITenantProvider _tenantProvider = tenantProvider;
 
-        public async Task<int> CountAsync(CancellationToken ct = default) 
-            => await _context.Products.Where(p => p.Tenant.Id == _tenantProvider.TenantId)
-                                      .CountAsync(ct);
+        public async Task<int> CountAsync(CancellationToken ct = default)
+        {
+            var count = await _context.Products.Where(p => p.Tenant.Id == _tenantProvider.TenantId)
+                                               .CountAsync(ct);
+            return count;
+        }
 
         public async Task<IEnumerable<Product>> GetPagedAsync(int pageIndex, int pageSize, CancellationToken ct = default)
-            => await _context.Products.AsNoTracking()
-                                      .Where(p => p.Tenant.Id == _tenantProvider.TenantId)
-                                      .OrderBy(p => p.CreatedAt)
-                                      .Skip((pageIndex - 1) * pageSize)
-                                      .Take(pageSize)
-                                      .ToListAsync(ct);
+        {
+            var products = await _context.Products.AsNoTracking()
+                                                  .Where(p => p.Tenant.Id == _tenantProvider.TenantId)
+                                                  .OrderBy(p => p.CreatedAt)
+                                                  .Skip((pageIndex - 1) * pageSize)
+                                                  .Take(pageSize)
+                                                  .ToListAsync(ct);
+            return products;
+        }
     }
 }

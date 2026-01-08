@@ -1,14 +1,18 @@
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.WebApi.Bootstrapper;
+using GearCore.Monolith.WebApi.Filters;
 using GearCore.Monolith.WebApi.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers().AddJsonOptions(config =>
-{
-    config.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-});
+//builder.Services.AddMemoryCache();
+//builder.Services.AddScoped<CacheResourceFilter>();
+builder.Services.AddControllers()
+    .AddJsonOptions(config =>
+    {
+        config.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    });
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 builder.Services.AddDependencyInjection(builder.Configuration);

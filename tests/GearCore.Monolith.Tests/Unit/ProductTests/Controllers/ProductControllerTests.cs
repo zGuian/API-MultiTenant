@@ -46,10 +46,8 @@ namespace GearCore.Monolith.Tests.Unit.ProductTests.Controllers
             var ok = Assert.IsType<OkObjectResult>(result);
 
             var value = ok.Value!;
-            var paginationProp = value.GetType().GetProperty("pagination");
             var itemsProp = value.GetType().GetProperty("items");
 
-            Assert.NotNull(paginationProp);
             Assert.NotNull(itemsProp);
 
             var items = itemsProp!.GetValue(value) as IEnumerable<ProductViewDto>;

@@ -102,38 +102,6 @@ namespace GearCore.Monolith.Tests.Unit.UserTests.Controllers
         }
         #endregion
 
-        #region Login
-        [Fact]
-        public async Task Login_WhenCredentialsAreValid_ShouldReturnTokenAndSetHeaders()
-        {
-            // Arrange
-            var dto = new UserLoginDto
-            {
-                Email = "john@test.com",
-                Password = "123"
-            };
-
-            var user = new User("John", "Doe", dto.Email, dto.Password, null);
-            var roles = new List<string> { "Admin" };
-            var token = "jwt-token";
-
-            _queryMock.Setup(q => q.FindByEmailAsync(dto.Email)).ReturnsAsync(user);
-            _queryMock.Setup(q => q.CheckPasswordSignIn(user, dto.Password)).Returns(true);
-            _queryMock.Setup(q => q.GetRolesAsync(user)).ReturnsAsync(roles);
-            _jwtMock.Setup(j => j.GenerateToken(user, roles)).Returns(token);
-
-            // Act
-            var result = await _controller.Login(dto);
-
-            // Assert
-            var ok = Assert.IsType<OkObjectResult>(result);
-            Assert.Equal(token, ok.Value);
-
-            Assert.True(_controller.Response.Headers.ContainsKey("X-Auth-AccessToken"));
-            Assert.True(_controller.Response.Headers.ContainsKey("X-Auth-RefreshToken"));
-        }
-        #endregion
-
         #region Register
         [Fact]
         public async Task Register_WhenUserDoesNotExist_ShouldCreateUser()

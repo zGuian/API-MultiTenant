@@ -15,7 +15,7 @@ namespace GearCore.Monolith.Core.StockCore.Services
         public async Task<HashSet<StockViewDto>> GetAllStocksAsync(CancellationToken ct = default)
         {
             var stocks = await _stockQueryRepository.GetAllAsync(ct);
-            return _mapper.Map<HashSet<StockViewDto>>(stocks);
+            return stocks.Adapt<HashSet<StockViewDto>>();
         }
 
         public async Task<StockViewDto> GetByIdAsync(string id, CancellationToken ct = default)
