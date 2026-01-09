@@ -21,7 +21,21 @@ namespace GearCore.Monolith.Core.SalesCore.Entities
 
         public virtual ICollection<SaleItem> SaleItems { get; set; } = [];
 
+        public Sales()
+        {
+            Status = SaleStatus.Draft;
+            SumTotalAmount();
+            SumFinalAmount();
+        }
 
+        public Sales(ICollection<SaleItem> saleItems, string userId)
+        {
+            Status = SaleStatus.Draft;
+            SaleItems = saleItems;
+            UserId = userId;
+            SumTotalAmount();
+            SumFinalAmount();
+        }
 
         public ValueResponse<bool> ConfirmSale()
         {

@@ -27,5 +27,13 @@ namespace GearCore.Monolith.Core.StockCore.Services
             stock.SetValuesToEntity(_tenantProvider.TenantId, registerDto.ProductId);
             await _stockCommandRepository.InsertAsync(stock, ct);
         }
+
+        public async Task UpdateStockAsync(UpdateStockDto dto, CancellationToken ct = default)
+        {
+            var newStock = dto.Adapt<Stock>();
+            var stock = await _stockQueryRepository.GetByIdAsync(dto.Id, ct);
+            _stockCommandRepository.Update(newStock);
+            await _unitOfWork.CommitAsync(ct);
+        }
     }
 }

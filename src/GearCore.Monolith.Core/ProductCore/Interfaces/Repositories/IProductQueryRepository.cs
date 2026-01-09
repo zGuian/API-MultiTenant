@@ -7,5 +7,6 @@ namespace GearCore.Monolith.Core.ProductCore.Interfaces.Repositories
     {
         Task<int> CountAsync(CancellationToken ct = default);
         Task<IEnumerable<Product>> GetPagedAsync(int pageIndex, int pageSize, CancellationToken ct = default);
+        Task<IEnumerable<Product>> GetManyProductById(IEnumerable<string> ids);
     }
 }

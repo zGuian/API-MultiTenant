@@ -4,6 +4,7 @@ using GearCore.Monolith.Core.StockCore.Interfaces.Repositories;
 using GearCore.Monolith.Infra.Data.Commons.Context;
 using GearCore.Monolith.Infra.Data.Commons.Repositories;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Data;
@@ -12,10 +13,11 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Repositories
 {
     public class StockCommandRepository(AppDbContext context
         , ILogger<StockCommandRepository> logger
-        , IConfiguration configuration) : BaseCommandRepository<Stock, Guid>(context)
+        , IConfiguration configuration) : BaseCommandRepository<Stock, string>(context)
         , IStockCommandRepository
     {
         private readonly ILogger<StockCommandRepository> _logger = logger;
+        private readonly AppDbContext _context = context;
         private readonly string _connectionString = configuration.GetConnectionString("SQLDefault")
             ?? throw new ArgumentNullException("ConnectionString:SQLDefault");
 
@@ -47,6 +49,23 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Repositories
                     await begin.RollbackAsync(ct);
                 }
                 await begin.CommitAsync(ct);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public override void Update(Stock entity)
+        {
+            try
+            {
+                _context.Stocks.Where(s => s.Id == entity.Id)
+                    .ExecuteUpdate(s => s
+                    .SetProperty(oldValue => oldValue.Quantity, newValue => entity.Quantity)
+                    .SetProperty(oldValue => oldValue.ReservedQuantity, newValue => entity.ReservedQuantity)
+                    .SetProperty(oldValue => oldValue.Active, newValue => entity.Active)
+                    .SetProperty(oldValue => oldValue.UpdatedAt, newValue => entity.UpdatedAt));
             }
             catch (Exception)
             {

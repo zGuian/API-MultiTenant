@@ -60,5 +60,15 @@ namespace GearCore.Monolith.Core.ProductCore.Entities
             Brand = brand;
             UpdatedAt = DateTimeOffset.UtcNow.LocalDateTime;
         }
+
+        public static decimal TotalValueProduct(IEnumerable<Product> values)
+        {
+            decimal total = 0;
+            foreach (var product in values)
+            {
+                total =+ product.Price;
+            }
+            return total;
+        }
     }
 }

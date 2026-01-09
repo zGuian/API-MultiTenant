@@ -21,6 +21,13 @@ namespace GearCore.Monolith.WebApi.Controllers
             return Ok(stocks);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetStockByIdAsync([FromServices] IStockQuery query, string id)
+        {
+            var stock = await query.GetByIdAsync(id);
+            return Ok(stock);
+        }
+
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterStock([FromServices] IStockCommand command
             , [FromBody] RegisterStockDto dto
@@ -28,6 +35,15 @@ namespace GearCore.Monolith.WebApi.Controllers
         {
             await command.AddStockAsync(dto, ct);
             return Ok("Stock register for success");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateStock([FromServices] IStockCommand command
+            , [FromBody] UpdateStockDto dto
+            , CancellationToken ct)
+        {
+            await command.UpdateStockAsync(dto, ct);
+            return Ok();
         }
     }
 }

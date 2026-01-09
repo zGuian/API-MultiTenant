@@ -5,5 +5,6 @@ namespace GearCore.Monolith.Core.StockCore.Interfaces.Services
     public interface IStockCommand
     {
         Task AddStockAsync(RegisterStockDto registerDto, CancellationToken ct = default);
+        Task UpdateStockAsync(UpdateStockDto dto, CancellationToken ct);
     }
 }

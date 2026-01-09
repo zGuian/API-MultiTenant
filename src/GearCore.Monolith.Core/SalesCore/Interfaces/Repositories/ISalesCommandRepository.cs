@@ -5,5 +5,6 @@ namespace GearCore.Monolith.Core.SalesCore.Interfaces.Repositories
 {
     public interface ISalesCommandRepository : IBaseCommandRepository<Sales, string>
     {
+        Task ExecuteSaleAsync(Sales sale);
     }
 }

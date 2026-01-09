@@ -21,25 +21,32 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Repositories
         public override async Task<HashSet<Stock>> GetAllAsync(CancellationToken ct = default)
         {
             var result = await _context.Stocks.Where(s => s.TenantId == _tenantProvider.TenantId)
-                                 .OrderByDescending(s => s.Quantity)
-                                 .Select(s => new Stock
-                                 {
-                                     Id = s.Id,
-                                     TenantId = s.Tenant.Id,
-                                     Product = new Product
-                                     {
-                                         Id = s.Product.Id,
-                                         Name = s.Product.Name,
-                                         Description = s.Product.Description,
-                                         Price = s.Product.Price,
-                                         CreatedAt = s.Product.CreatedAt
-                                     },
-                                     Quantity = s.Quantity,
-                                     ReservedQuantity = s.ReservedQuantity,
-                                     Active = s.Active,
-                                     UpdatedAt = s.UpdatedAt
-                                 })
-                                 .ToHashSetAsync(ct);
+                                              .Select(s => new Stock
+                                              {
+                                                  Id = s.Id,
+                                                  TenantId = s.Tenant.Id,
+                                                  Product = new Product
+                                                  {
+                                                      Id = s.Product.Id,
+                                                      Name = s.Product.Name,
+                                                      Description = s.Product.Description,
+                                                      Price = s.Product.Price,
+                                                      CreatedAt = s.Product.CreatedAt
+                                                  },
+                                                  Quantity = s.Quantity,
+                                                  ReservedQuantity = s.ReservedQuantity,
+                                                  Active = s.Active,
+                                                  UpdatedAt = s.UpdatedAt
+                                              })
+                                             .ToHashSetAsync(ct);
+            return result;
+        }
+
+        public override async Task<Stock> GetByIdAsync(string id, CancellationToken ct = default)
+        {
+            var result = await _context.Stocks.Where(s => s.TenantId == _tenantProvider.TenantId)
+                                              .Include(s => s.Product)
+                                              .SingleAsync(s => s.Id == id, ct);
             return result;
         }
     }

@@ -15,5 +15,22 @@ namespace GearCore.Monolith.Core.SalesCore.Entities
 
         public string ProductId { get; set; } = default!;
         public virtual Product Product { get; set; } = new();
+
+        public SaleItem()
+        { }
+
+        public SaleItem(Product product, int quantity)
+        {
+            Product = product;
+            ProductName = product.Name;
+            UnitPrice = product.Price;
+            Quantity = quantity;
+            SumTotalPrice();
+        }
+
+        public void SumTotalPrice()
+        {
+            TotalPrice = UnitPrice * Quantity;
+        }
     }
 }

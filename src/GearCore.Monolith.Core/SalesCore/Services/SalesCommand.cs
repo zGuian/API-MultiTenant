@@ -1,15 +1,37 @@
-﻿using GearCore.Monolith.Core.SalesCore.Interfaces.Repositories;
+﻿using GearCore.Monolith.Core.ProductCore.Interfaces.Repositories;
+using GearCore.Monolith.Core.SalesCore.DTOs.Requests;
+using GearCore.Monolith.Core.SalesCore.Entities;
+using GearCore.Monolith.Core.SalesCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.SalesCore.Interfaces.Services;
 
 namespace GearCore.Monolith.Core.SalesCore.Services
 {
-    public class SalesCommand(ISalesCommandRepository commandRepository) : ISalesCommand
+    public class SalesCommand(ISalesCommandRepository saleCommandRepository
+        , ISalesQueryRepository saleQueryRepository
+        , IProductQueryRepository productQueryRepository) : ISalesCommand
     {
-        private readonly ISalesCommandRepository _commandRepository = commandRepository;
+        private readonly ISalesCommandRepository _saleCommandRepository = saleCommandRepository;
+        private readonly ISalesQueryRepository _saleQueryRepository = saleQueryRepository;
+        private readonly IProductQueryRepository _productQueryRepository = productQueryRepository;
 
-        public async Task ExecutesSale()
+        public async Task ExecuteSaleAsync(RealizeSaleRequest request)
         {
+            //PONTO DE ROUND-TRIP (MELHORAR DEPOIS)
+            var products = await _productQueryRepository.GetManyProductById(request.Items.Select(rs => rs.ProductId));
 
+            var saleItems = new List<SaleItem>();
+            foreach (var item in request.Items)
+            {
+                var product = products.SingleOrDefault(p => p.Id == item.ProductId);
+                if (product == null)
+                {
+                    continue;
+                }
+                saleItems.Add(new SaleItem(product, item.Quantity));
+            }
+
+            var sale = new Sales(saleItems, request.UserId);
+            await _saleCommandRepository.ExecuteSaleAsync(sale);
         }
     }
 }

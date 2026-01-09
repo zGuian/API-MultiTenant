@@ -1,6 +1,9 @@
-﻿namespace GearCore.Monolith.Core.SalesCore.Interfaces.Services
+﻿using GearCore.Monolith.Core.SalesCore.DTOs.Requests;
+
+namespace GearCore.Monolith.Core.SalesCore.Interfaces.Services
 {
     public interface ISalesCommand
     {
+        Task ExecuteSaleAsync(RealizeSaleRequest request);
     }
 }

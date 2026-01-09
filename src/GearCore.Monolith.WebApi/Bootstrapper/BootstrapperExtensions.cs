@@ -5,6 +5,9 @@ using GearCore.Monolith.Core.Commons.Utils.Converters;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.ProductCore.Interfaces.Services;
 using GearCore.Monolith.Core.ProductCore.Services;
+using GearCore.Monolith.Core.SalesCore.Interfaces.Repositories;
+using GearCore.Monolith.Core.SalesCore.Interfaces.Services;
+using GearCore.Monolith.Core.SalesCore.Services;
 using GearCore.Monolith.Core.StockCore.Interfaces.Repositories;
 using GearCore.Monolith.Core.StockCore.Interfaces.Services;
 using GearCore.Monolith.Core.StockCore.Services;
@@ -19,6 +22,7 @@ using GearCore.Monolith.Infra.Data.Commons.Repositories;
 using GearCore.Monolith.Infra.Data.Commons.TokenJwt;
 using GearCore.Monolith.Infra.Data.Commons.TokenJwt.Interfaces;
 using GearCore.Monolith.Infra.Data.ProductInfra.Repositories;
+using GearCore.Monolith.Infra.Data.SalesInfra.Repositories;
 using GearCore.Monolith.Infra.Data.StockInfra.Repositories;
 using GearCore.Monolith.Infra.Data.TenantInfra.Repositories;
 using GearCore.Monolith.Infra.Data.UserInfra.Repositories;
@@ -68,6 +72,8 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
             services.AddScoped<IProductCommand, ProductCommand>();
             services.AddScoped<IProductQuery, ProductQuery>();
 
+            services.AddScoped<ISalesCommand, SalesCommand>();
+            services.AddScoped<ISalesQuery, SalesQuery>();
         }
 
         private static void AddMapsterDependecies(this IServiceCollection services)
@@ -126,6 +132,9 @@ namespace GearCore.Monolith.WebApi.Bootstrapper
 
             services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
             services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
+
+            services.AddScoped<ISalesCommandRepository, SalesCommandRepository>();
+            services.AddScoped<ISalesQueryRepository, SalesQueryRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
