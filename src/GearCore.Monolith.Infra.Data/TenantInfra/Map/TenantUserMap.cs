@@ -14,11 +14,11 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Map
             builder.HasKey(tu => new { tu.TenantId, tu.UserId });
 
             builder.Property(tu => tu.TenantId)
-                .HasColumnName("COL_TENANT_ID")
+                .HasColumnName("FK_TENANT_ID")
                 .IsRequired();
 
             builder.Property(tu => tu.UserId)
-                .HasColumnName("COL_USER_ID")
+                .HasColumnName("FK_USER_ID")
                 .IsRequired();
 
             builder.Property(tu => tu.Role)
@@ -34,7 +34,6 @@ namespace GearCore.Monolith.Infra.Data.TenantInfra.Map
                 .HasColumnName("COL_CREATED_BY")
                 .IsRequired();
 
-            // Relacionamento
             builder.HasOne(tu => tu.Tenant)
                 .WithMany(t => t.TenantUsers)
                 .HasForeignKey(tu => tu.TenantId)

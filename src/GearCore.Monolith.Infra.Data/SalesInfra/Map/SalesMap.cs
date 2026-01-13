@@ -9,7 +9,7 @@ namespace GearCore.Monolith.Infra.Data.SalesInfra.Map
     {
         public void Configure(EntityTypeBuilder<Sales> builder)
         {
-            builder.ToTable("TB_SALES");
+            builder.ToTable("TB_SALE");
 
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id)

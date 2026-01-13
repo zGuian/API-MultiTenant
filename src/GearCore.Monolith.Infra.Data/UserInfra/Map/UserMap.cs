@@ -8,7 +8,7 @@ namespace GearCore.Monolith.Infra.Data.UserInfra.Map
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("TB_USERS");
+            builder.ToTable("TB_USER");
 
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Id)

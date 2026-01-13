@@ -13,11 +13,11 @@ namespace GearCore.Monolith.Infra.Data.UserInfra.Map
             builder.HasKey(ur => new { ur.UserID, ur.RoleID });
 
             builder.Property(ur => ur.UserID)
-                .HasColumnName("COL_USER_ID")
+                .HasColumnName("FK_USER_ID")
                 .IsRequired();
 
             builder.Property(ur => ur.RoleID)
-                .HasColumnName("COL_ROLE_ID")
+                .HasColumnName("FK_ROLE_ID")
                 .IsRequired();
 
             builder.HasOne(ur => ur.User)
