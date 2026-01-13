@@ -5,5 +5,7 @@ namespace GearCore.Monolith.Core.SalesCore.Interfaces.Repositories
 {
     public interface ISalesQueryRepository : IBaseQueryRepository<Sales, string>
     {
+        Task<int> CountAsync(CancellationToken ct = default);
+        Task<IEnumerable<Sales>> GetPagedAsync(int pageIndex, int pageSize, CancellationToken ct = default);
     }
 }

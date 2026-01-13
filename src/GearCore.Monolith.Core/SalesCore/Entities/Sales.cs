@@ -24,8 +24,6 @@ namespace GearCore.Monolith.Core.SalesCore.Entities
         public Sales()
         {
             Status = SaleStatus.Draft;
-            SumTotalAmount();
-            SumFinalAmount();
         }
 
         public Sales(ICollection<SaleItem> saleItems, string userId)

@@ -8,7 +8,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Data;
-using System.Data.Common;
 
 namespace GearCore.Monolith.Infra.Data.SalesInfra.Repositories
 {
@@ -25,16 +24,14 @@ namespace GearCore.Monolith.Infra.Data.SalesInfra.Repositories
         private readonly string _connectionString = configuration.GetConnectionString("SQLDefault")
             ?? throw new ArgumentNullException("ConnectionString:SQLDefault");
 
-        private DbTransaction? _begin;
-
         public async Task ExecuteSaleAsync(Sales sale)
         {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+            using var begin = await conn.BeginTransactionAsync();
+
             try
             {
-                using var conn = new SqlConnection(_connectionString);
-                await conn.OpenAsync();
-                _begin = await conn.BeginTransactionAsync();
-
                 var insertSale = $@"INSERT INTO TB_SALES
                                     VALUES(@Id, @TenantId, @UserId, @TotalAmount, @DiscountAmount, @FinalAmount, @Status, @CreatedAt, @UpdatedAt)";
                 var parametersSale = new
@@ -49,7 +46,7 @@ namespace GearCore.Monolith.Infra.Data.SalesInfra.Repositories
                     @CreatedAt = DateTimeOffset.UtcNow.LocalDateTime,
                     @UpdatedAt = DateTimeOffset.UtcNow.LocalDateTime,
                 };
-                var rowSale = await conn.ExecuteAsync(insertSale, parametersSale, _begin, 30, CommandType.Text);
+                var rowSale = await conn.ExecuteAsync(insertSale, parametersSale, begin, 30, CommandType.Text);
 
                 var insertSaleItem = $@"INSERT INTO TB_SALE_ITEM
                                         VALUES(@Id, @SaleId, @ProductId, @ProductName, @UnitPrice, @Quantity, @TotalPrice)";
@@ -67,20 +64,50 @@ namespace GearCore.Monolith.Infra.Data.SalesInfra.Repositories
                         item.TotalPrice,
                     });
                 }
-                var rowSaleItem = await conn.ExecuteAsync(insertSaleItem, parametersSaleItems, _begin, 30, CommandType.Text);
+                var rowSaleItem = await conn.ExecuteAsync(insertSaleItem, parametersSaleItems, begin, 30, CommandType.Text);
 
                 if (rowSale < 1 && rowSaleItem < 1)
                 {
-                    await _begin.RollbackAsync();
+                    await begin.RollbackAsync();
                 }
-                await _begin.CommitAsync();
+                await begin.CommitAsync();
             }
             catch (Exception)
             {
-                if (_begin != null)
+                await begin.RollbackAsync();
+                throw;
+            }
+        }
+
+        public async Task ConfirmSaleAsync(Sales sale)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+            using var begin = await conn.BeginTransactionAsync();
+            try
+            {
+                var sql = $@"UPDATE TB_SALES
+                             SET 
+                                COL_STATUS = @Status
+                             WHERE 
+                                COL_ID = @Id";
+
+                var parameters = new
                 {
-                    await _begin.RollbackAsync();
+                    sale.Status,
+                    sale.Id,
+                };
+
+                var row = await conn.ExecuteAsync(sql, parameters, begin, 30, CommandType.Text);
+                if (row < 1)
+                {
+                    await begin.RollbackAsync();
                 }
+                await begin.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await begin.RollbackAsync();
                 throw;
             }
         }

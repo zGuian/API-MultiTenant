@@ -4,6 +4,7 @@ namespace GearCore.Monolith.Core.SalesCore.Interfaces.Services
 {
     public interface ISalesCommand
     {
-        Task ExecuteSaleAsync(RealizeSaleRequest request);
+        Task ExecuteOrderAsync(RealizeSaleRequest request);
+        Task ConfirmSaleAsync(string request);
     }
 }

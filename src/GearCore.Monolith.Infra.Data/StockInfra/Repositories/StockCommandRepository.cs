@@ -55,22 +55,5 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Repositories
                 throw;
             }
         }
-
-        public override void Update(Stock entity)
-        {
-            try
-            {
-                _context.Stocks.Where(s => s.Id == entity.Id)
-                    .ExecuteUpdate(s => s
-                    .SetProperty(oldValue => oldValue.Quantity, newValue => entity.Quantity)
-                    .SetProperty(oldValue => oldValue.ReservedQuantity, newValue => entity.ReservedQuantity)
-                    .SetProperty(oldValue => oldValue.Active, newValue => entity.Active)
-                    .SetProperty(oldValue => oldValue.UpdatedAt, newValue => entity.UpdatedAt));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
     }
 }
