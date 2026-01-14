@@ -5,5 +5,6 @@ namespace GearCore.Monolith.Core.StockCore.Interfaces.Repositories
 {
     public interface IStockQueryRepository : IBaseQueryRepository<Stock, string>
     {
+        Task<IEnumerable<Stock>> GetManyProductInStock(IEnumerable<string> ids, CancellationToken ct = default);
     }
 }

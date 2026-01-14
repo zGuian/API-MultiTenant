@@ -44,5 +44,11 @@ namespace GearCore.Monolith.Core.StockCore.Entities
                 Tenant = Tenant
             };
         }
+
+        public void MakeReservation(int quantity)
+        {
+            Quantity -= quantity;
+            ReservedQuantity += quantity;
+        }
     }
 }

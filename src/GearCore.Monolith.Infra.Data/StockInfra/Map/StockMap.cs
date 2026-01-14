@@ -40,7 +40,8 @@ namespace GearCore.Monolith.Infra.Data.StockInfra.Map
             builder.Property(s => s.Active)
                    .HasColumnOrder(6)
                    .HasColumnName("COL_ACTIVE")
-                   .HasConversion<string>()
+                   .HasConversion(v => v.ToString()
+                                 ,v => bool.Parse(v))
                    .IsRequired();
         }
     }
